@@ -1,5 +1,5 @@
 import Link from "next/link"
-import Image from "next/image"
+import { withBase } from "../../lib/base-path"
 
 export default function Footer() {
   const navigationLinks = [
@@ -23,7 +23,7 @@ export default function Footer() {
         <div className="grid gap-12 border-t border-white/15 pt-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-8 lg:pt-16">
           <div className="lg:col-span-5">
             <Link href="/" className="inline-block" aria-label="Naqsh Home">
-              <Image src="/naqsh-white.png" alt="Naqsh Logo" width={135} height={45} className="h-9 w-auto" unoptimized />
+              <img src={withBase("/naqsh-white.png")} alt="Naqsh Logo" width={135} height={45} className="h-9 w-auto" />
             </Link>
             <p className="mt-6 max-w-sm text-sm leading-relaxed text-white/60">
               To Leave a Trace — Naqsh Holding Company is an investment leader with diverse subsidiaries across

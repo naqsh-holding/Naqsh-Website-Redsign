@@ -1,8 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { useEffect, useState } from "react"
+import { withBase } from "../../lib/base-path"
 
 const links = [
   { label: "About", href: "/#about" },
@@ -52,14 +52,12 @@ export default function Navigation({ overlay = false }: NavigationProps = {}) {
       >
         <div className={pill}>
           <Link href="/" className="nav-logo" aria-label="Naqsh Holding Company Home">
-            <Image
-              src="/naqsh-white.png"
+            <img
+              src={withBase("/naqsh-white.png")}
               alt="Naqsh Holding Company Logo"
               width={40}
               height={40}
               className="h-[26px] w-[26px] object-contain"
-              priority
-              unoptimized
             />
           </Link>
           <div className="hidden items-center pr-2 md:flex" role="navigation">
