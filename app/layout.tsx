@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import "./globals.css"
 import { syne, outfit } from "./lib/fonts"
 import { criticalCSS } from "./lib/critical-css"
+import { BASE_PATH, withBase } from "./lib/base-path"
 import BFCacheReload from "./components/ui/BFCacheReload"
 import LoadingScreen from "./components/sections/LoadingScreen"
 
@@ -107,16 +108,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var p=location.pathname;if(p==='/'||p===''){document.documentElement.setAttribute('data-hero-pending','1');if(sessionStorage.getItem('naqsh-intro-seen')!=='1'){document.documentElement.setAttribute('data-intro','1');}}}catch(e){}})();`,
+            __html: `(function(){try{var p=location.pathname.replace(/\\/+$/,'')||'/';var b=${JSON.stringify(
+              (BASE_PATH || "").replace(/\/+$/, "") || "/"
+            )};if(p===b){document.documentElement.setAttribute('data-hero-pending','1');if(sessionStorage.getItem('naqsh-intro-seen')!=='1'){document.documentElement.setAttribute('data-intro','1');}}}catch(e){}})();`,
           }}
         />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <link rel="icon" href="/favicon-96x96.png" type="image/png" sizes="96x96" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/site.webmanifest" />
-        <link rel="preload" as="image" href="/naqsh-white.png" fetchPriority="high" />
-        <link rel="preload" as="video" href="/hero.mp4" type="video/mp4" />
+        <link rel="icon" href={withBase("/favicon.ico")} sizes="any" />
+        <link rel="icon" href={withBase("/favicon.svg")} type="image/svg+xml" />
+        <link rel="icon" href={withBase("/favicon-96x96.png")} type="image/png" sizes="96x96" />
+        <link rel="apple-touch-icon" href={withBase("/apple-touch-icon.png")} />
+        <link rel="manifest" href={withBase("/site.webmanifest")} />
+        <link rel="preload" as="image" href={withBase("/naqsh-white.png")} fetchPriority="high" />
+        <link rel="preload" as="video" href={withBase("/hero.mp4")} type="video/mp4" />
         <link rel="dns-prefetch" href="//hel1.your-objectstorage.com" />
         <link rel="preconnect" href="https://hel1.your-objectstorage.com" crossOrigin="anonymous" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -126,7 +129,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: `
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
-          navigator.serviceWorker.register('/sw.js').catch(function() {});
+          ${BASE_PATH ? "" : "navigator.serviceWorker.register('/sw.js').catch(function() {});"}
         });
       }
     `,

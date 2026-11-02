@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { isHomePath, withBase } from "../../lib/base-path"
 
 const STORAGE_KEY = "naqsh-intro-seen"
 
@@ -9,7 +10,7 @@ export default function LoadingScreen() {
   const [done, setDone] = useState(false)
 
   useEffect(() => {
-    const onHome = location.pathname === "/" || location.pathname === ""
+    const onHome = isHomePath(location.pathname)
     const introLocked = document.documentElement.hasAttribute("data-intro")
 
     let seen = false
@@ -66,7 +67,7 @@ export default function LoadingScreen() {
       aria-label="Welcome to Naqsh Holding"
     >
       <div className="intro-logo-frame">
-        <img src="/naqsh-white.png" alt="" className="intro-logo" width={200} height={200} />
+        <img src={withBase("/naqsh-white.png")} alt="" className="intro-logo" width={200} height={200} />
       </div>
       <button
         type="button"

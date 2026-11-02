@@ -33,7 +33,12 @@ jobs:
         run: pnpm install
 
       - name: Build
+        env:
+          NEXT_PUBLIC_BASE_PATH: /Naqsh-Website-Redsign
         run: pnpm build
+
+      - name: Keep _next assets on Pages
+        run: touch out/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

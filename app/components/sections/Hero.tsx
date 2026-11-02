@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { withBase } from "../../lib/base-path"
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -217,7 +218,7 @@ export default function Hero() {
           preload="auto"
           aria-hidden="true"
         >
-          <source src="/hero.mp4" type="video/mp4" />
+          <source src={withBase("/hero.mp4")} type="video/mp4" />
         </video>
       </div>
       <div className="hero-veil absolute inset-0 z-10" />
