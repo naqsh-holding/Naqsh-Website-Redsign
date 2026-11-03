@@ -36,7 +36,7 @@ export default function Hero() {
     const easeOut = (t: number) => 1 - (1 - t) * (1 - t) * (1 - t)
 
     const mediaTime = () => {
-      const duration = Number.isFinite(video.duration) && video.duration > 0 ? video.duration : 5.04
+      const duration = Number.isFinite(video.duration) && video.duration > 0 ? video.duration : 6.05
       const wall = playStarted ? (performance.now() - playStarted) / 1000 : 0
       const elapsed = video.currentTime > 0.04 ? video.currentTime : Math.max(video.currentTime, wall)
       return { duration, elapsed, remaining: duration - elapsed }
