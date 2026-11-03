@@ -1,20 +1,24 @@
 import Image from "next/image"
+import { withBase } from "../../lib/base-path"
 
 export default function CeoMessage() {
   return (
     <section id="ceo-message" className="bg-paper">
-      <div className="grid lg:grid-cols-12">
-        <div className="relative min-h-[520px] lg:col-span-5 lg:min-h-[760px]">
-          <Image
-            src="https://hel1.your-objectstorage.com/naqsh-pord/images/ceo.png"
-            alt="CEO Portrait - Mohammed Bin Faihan"
-            fill
-            className="object-cover object-top"
-            sizes="(max-width: 1024px) 100vw, 42vw"
-            unoptimized
-          />
+      <div className="grid items-center lg:grid-cols-12 lg:min-h-[860px]">
+        <div className="relative flex items-center justify-center overflow-visible px-2 py-10 sm:px-4 lg:col-span-6 lg:px-0 lg:py-16">
+          <div className="relative aspect-square w-[min(100%,760px)] max-w-none scale-[1.12] origin-center lg:w-[min(100%,880px)] lg:scale-[1.16]">
+            <Image
+              src={withBase("/ceo.png")}
+              alt="CEO Portrait - Mohammed Bin Faihan"
+              fill
+              className="object-contain object-center"
+              sizes="(max-width: 1024px) 100vw, 55vw"
+              unoptimized
+              priority
+            />
+          </div>
         </div>
-        <div className="flex flex-col justify-center px-6 py-16 md:px-12 lg:col-span-7 lg:px-16 lg:py-24 xl:px-24">
+        <div className="flex flex-col justify-center px-6 py-10 md:px-12 lg:col-span-6 lg:px-14 lg:py-16 xl:px-20">
           <p className="label">From the CEO</p>
           <blockquote className="display mt-8 max-w-2xl text-[clamp(1.35rem,2.4vw,2.05rem)] font-medium leading-snug text-ink">
             “At Naqsh, we don&apos;t just invest, we aim to leave a lasting and meaningful impact. Our vision is rooted

@@ -7,22 +7,13 @@ import { getAllProjects, type Project } from "../../lib/data/projects"
 
 const PLACEHOLDER = "https://hel1.your-objectstorage.com/naqsh-pord/placeholder.svg"
 
-function projectImages(project: Project) {
-  const gallery: string[] = []
-  if (project.image) gallery.push(project.image)
-  if (project.images.hero && project.images.hero !== project.image) {
-    gallery.push(project.images.hero)
-  }
+function projectPreview(project: Project) {
+  if (project.image) return project.image
+  if (project.images.hero) return project.images.hero
   for (const section of project.sections) {
-    for (const src of section.images) {
-      if (src && !gallery.includes(src)) gallery.push(src)
-      if (gallery.length >= 2) break
-    }
-    if (gallery.length >= 2) break
+    if (section.images[0]) return section.images[0]
   }
-  if (gallery.length === 0) return [PLACEHOLDER, PLACEHOLDER]
-  if (gallery.length === 1) return [gallery[0], gallery[0]]
-  return gallery.slice(0, 2)
+  return PLACEHOLDER
 }
 
 function projectLocation(project: Project) {
@@ -72,7 +63,7 @@ export default function ProjectsSlider() {
         ) : (
           <ul className="border-b border-ink/15">
             {featuredProjects.map((project) => {
-              const [primary, secondary] = projectImages(project)
+              const preview = projectPreview(project)
               const location = projectLocation(project)
 
               return (
@@ -109,30 +100,15 @@ export default function ProjectsSlider() {
                     </div>
 
                     <div className="md:col-span-7 lg:col-span-8">
-                      <div className="grid grid-cols-2 gap-3 md:gap-4">
-                        <div className="relative aspect-[4/3] overflow-hidden bg-ink/5">
-                          <Image
-                            src={primary}
-                            alt=""
-                            fill
-                            className="object-cover transition duration-700 group-hover:scale-[1.03]"
-                            sizes="(max-width: 768px) 50vw, 30vw"
-                            unoptimized
-                          />
-                        </div>
-                        <div className="relative aspect-[4/3] overflow-hidden bg-ink/5">
-                          <Image
-                            src={secondary}
-                            alt=""
-                            fill
-                            className="object-cover transition duration-700 group-hover:scale-[1.03]"
-                            sizes="(max-width: 768px) 50vw, 30vw"
-                            unoptimized
-                          />
-                        </div>
-                      </div>
-                      <div className="mt-3 h-px w-full bg-ink/10" aria-hidden="true">
-                        <div className="h-px w-1/3 bg-ink/35 transition-all duration-500 group-hover:w-2/3" />
+                      <div className="relative aspect-[16/10] overflow-hidden bg-ink/5">
+                        <Image
+                          src={preview}
+                          alt=""
+                          fill
+                          className="object-cover transition duration-700 group-hover:scale-[1.03]"
+                          sizes="(max-width: 768px) 100vw, 58vw"
+                          unoptimized
+                        />
                       </div>
                     </div>
                   </Link>

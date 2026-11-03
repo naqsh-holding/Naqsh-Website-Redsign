@@ -49,17 +49,17 @@ function Row({ row, reverse }: { row: number; reverse?: boolean }) {
   return (
     <div className="overflow-hidden">
       <div
-        className="marquee-track flex w-max gap-12 md:gap-16"
+        className="marquee-track flex w-max gap-20 md:gap-28 lg:gap-32"
         style={{ animationDuration: `${36 + row * 8}s`, animationDirection: reverse ? "reverse" : "normal" }}
       >
         {loop.map((brand, index) => (
-          <div key={`${brand.id}-${index}`} className="relative h-12 w-36 flex-shrink-0 md:h-14 md:w-44">
+          <div key={`${brand.id}-${index}`} className="relative h-24 w-64 flex-shrink-0 md:h-32 md:w-80 lg:h-40 lg:w-[26rem]">
             <Image
               src={brand.logo}
               alt={brand.name}
               fill
-              className="object-contain opacity-80 grayscale contrast-125"
-              sizes="176px"
+              className="object-contain opacity-90 grayscale contrast-125"
+              sizes="(max-width: 768px) 256px, (max-width: 1024px) 320px, 416px"
               unoptimized
             />
           </div>
@@ -77,7 +77,7 @@ export default function OurBrands() {
         <h2 className="display mt-4 text-[clamp(2rem,4vw,3.4rem)] text-ink">Trusted by industry leaders</h2>
         <p className="mt-4 max-w-xl text-mute">Partnerships built on trust, impact, and long-term success.</p>
       </div>
-      <div className="space-y-10">
+      <div className="space-y-16 md:space-y-20">
         <Row row={1} />
         <Row row={2} reverse />
         <Row row={3} />
