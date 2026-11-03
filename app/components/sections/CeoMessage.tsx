@@ -2,7 +2,7 @@ import Image from "next/image"
 
 export default function CeoMessage() {
   return (
-    <section id="ceo-message" className="surface-ink">
+    <section id="ceo-message" className="bg-paper">
       <div className="grid lg:grid-cols-12">
         <div className="relative min-h-[520px] lg:col-span-5 lg:min-h-[760px]">
           <Image
@@ -16,7 +16,7 @@ export default function CeoMessage() {
         </div>
         <div className="flex flex-col justify-center px-6 py-16 md:px-12 lg:col-span-7 lg:px-16 lg:py-24 xl:px-24">
           <p className="label">From the CEO</p>
-          <blockquote className="display mt-8 max-w-2xl text-[clamp(1.35rem,2.4vw,2.05rem)] font-medium leading-snug text-[var(--on-ink)]">
+          <blockquote className="display mt-8 max-w-2xl text-[clamp(1.35rem,2.4vw,2.05rem)] font-medium leading-snug text-ink">
             “At Naqsh, we don&apos;t just invest, we aim to leave a lasting and meaningful impact. Our vision is rooted
             in a strong belief that innovation drives progress, and that the private sector plays a vital role in
             shaping the future of our Kingdom. We are committed to smart, value-driven investments that align with Saudi
@@ -24,8 +24,8 @@ export default function CeoMessage() {
             impact. Naqsh, Investing with Purpose.”
           </blockquote>
           <div className="mt-12">
-            <p className="text-lg text-[var(--on-ink)]">Mohammed Bin Faihan</p>
-            <p className="mt-1 text-sm text-white/50">Chief Executive Officer</p>
+            <p className="text-lg text-ink">Mohammed Bin Faihan</p>
+            <p className="mt-1 text-sm text-mute">Chief Executive Officer</p>
           </div>
         </div>
       </div>

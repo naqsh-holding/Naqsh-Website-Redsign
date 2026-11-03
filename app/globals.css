@@ -46,6 +46,7 @@
     scroll-padding-top: 5.5rem;
     background: var(--paper);
     color: var(--ink);
+    transition: background-color 0.75s cubic-bezier(0.22, 1, 0.36, 1), color 0.75s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   body {
@@ -55,6 +56,107 @@
     font-feature-settings: "ss01" 1, "kern" 1;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    transition: background-color 0.75s cubic-bezier(0.22, 1, 0.36, 1), color 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  html[data-theme="dark"],
+  html[data-theme="dark"] body {
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+
+  html[data-theme="dark"] #main {
+    background-color: transparent;
+    color: var(--on-ink);
+  }
+
+  html[data-theme="dark"] #about,
+  html[data-theme="dark"] #companies,
+  html[data-theme="dark"] #ceo-message,
+  html[data-theme="dark"] #services {
+    background-color: transparent !important;
+    color: var(--on-ink);
+    transition: background-color 0.75s cubic-bezier(0.22, 1, 0.36, 1), color 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  #ceo-message,
+  #services {
+    transition: background-color 0.75s cubic-bezier(0.22, 1, 0.36, 1), color 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  html[data-theme="dark"] #about .text-ink,
+  html[data-theme="dark"] #about .display,
+  html[data-theme="dark"] #about .arrow-link,
+  html[data-theme="dark"] #about .label,
+  html[data-theme="dark"] #about .about-mark,
+  html[data-theme="dark"] #companies .text-ink,
+  html[data-theme="dark"] #companies .display,
+  html[data-theme="dark"] #companies h3,
+  html[data-theme="dark"] #companies .arrow-link,
+  html[data-theme="dark"] #ceo-message .text-ink,
+  html[data-theme="dark"] #ceo-message .display,
+  html[data-theme="dark"] #services .text-ink,
+  html[data-theme="dark"] #services .display {
+    color: var(--on-ink) !important;
+  }
+
+  html[data-theme="dark"] #about .about-mark {
+    background-color: var(--on-ink) !important;
+  }
+
+  html[data-theme="dark"] #about .text-mute,
+  html[data-theme="dark"] #about .text-ink\/85,
+  html[data-theme="dark"] #about .text-ink\/80,
+  html[data-theme="dark"] #companies .text-mute,
+  html[data-theme="dark"] #companies .label,
+  html[data-theme="dark"] #ceo-message .label,
+  html[data-theme="dark"] #ceo-message .text-mute,
+  html[data-theme="dark"] #services .label,
+  html[data-theme="dark"] #services .text-mute {
+    color: rgba(244, 241, 234, 0.58) !important;
+  }
+
+  html[data-theme="dark"] #companies .border-ink\/15,
+  html[data-theme="dark"] #about .border-ink\/15,
+  html[data-theme="dark"] #companies .company-cell {
+    border-color: rgba(255, 255, 255, 0.14) !important;
+  }
+
+  html[data-theme="dark"] #companies .company-tile {
+    background-color: transparent !important;
+  }
+
+  html[data-theme="dark"] #companies .company-name {
+    color: var(--on-ink) !important;
+  }
+
+  html[data-theme="dark"] #companies .company-desc {
+    color: rgba(244, 241, 234, 0.55) !important;
+  }
+
+  html[data-theme="dark"] #companies .company-logo {
+    filter: none;
+  }
+
+  html[data-theme="dark"] #companies .company-tile:hover .company-name,
+  html[data-theme="dark"] #companies .company-tile:focus-visible .company-name {
+    color: #fff !important;
+  }
+
+  html[data-theme="dark"] #services .theme-rule {
+    border-color: rgba(255, 255, 255, 0.14) !important;
+  }
+
+  html[data-theme="dark"] #services .theme-rule > * + * {
+    border-color: rgba(255, 255, 255, 0.14) !important;
+  }
+
+  html[data-theme="dark"] #services .theme-mark {
+    border-color: rgba(255, 255, 255, 0.5) !important;
+  }
+
+  html[data-theme="dark"] #services .theme-mark.is-active {
+    background-color: var(--on-ink) !important;
   }
 
   ::selection {
@@ -249,6 +351,32 @@
     height: 50px;
     justify-content: center;
     padding: 0;
+  }
+
+  .company-logo {
+    filter: brightness(0);
+    transition: filter 0.45s ease;
+  }
+
+  .company-tile:hover .company-logo,
+  .company-tile:focus-visible .company-logo {
+    filter: brightness(0) invert(1);
+  }
+
+  @media (min-width: 640px) {
+    .company-grid > .company-cell:nth-child(odd) {
+      border-right: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .company-grid > .company-cell:nth-child(odd) {
+      border-right: 0;
+    }
+
+    .company-grid > .company-cell:not(:nth-child(3n)) {
+      border-right: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+    }
   }
 
   .surface-ink {
@@ -496,6 +624,13 @@ html[data-intro] .intro-logo-frame {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  html,
+  body,
+  html[data-theme="dark"] #about,
+  html[data-theme="dark"] #companies {
+    transition-duration: 0.01ms !important;
   }
 
   .reveal,

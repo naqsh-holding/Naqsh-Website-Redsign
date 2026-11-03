@@ -29,53 +29,68 @@ const services = [
   },
 ]
 
+function canHover() {
+  return typeof window !== "undefined" && window.matchMedia("(hover: hover) and (pointer: fine)").matches
+}
+
 export default function OurServices() {
-  const [active, setActive] = useState(services[0])
+  const [activeId, setActiveId] = useState<number | null>(null)
 
   return (
-    <section id="services" className="surface-ink py-24 md:py-32 lg:py-40">
+    <section id="services" className="bg-paper py-24 md:py-32 lg:py-40">
       <div className="site-wrap grid gap-16 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <p className="label">Investment sectors</p>
-          <h2 className="display mt-6 text-[clamp(2.2rem,4.4vw,3.8rem)] text-[var(--on-ink)]">
+          <h2 className="display mt-6 text-[clamp(2.2rem,4.4vw,3.8rem)] text-ink">
             Naqsh Investment Sectors
           </h2>
-          <p className="mt-6 max-w-md text-base leading-relaxed text-white/60">
+          <p className="mt-6 max-w-md text-base leading-relaxed text-mute">
             Naqsh Holding strategically invests in sectors that shape the future and drive long-term growth:
           </p>
         </div>
 
         <div className="lg:col-span-7">
-          <div className="divide-y divide-white/15 border-y border-white/15">
+          <div
+            className="theme-rule divide-y border-y border-ink/15 divide-ink/15"
+            onMouseLeave={() => {
+              if (canHover()) setActiveId(null)
+            }}
+          >
             {services.map((service, index) => {
-              const isActive = active.id === service.id
+              const isActive = activeId === service.id
               return (
                 <button
                   key={service.id}
-                  onClick={() => setActive(service)}
-                  className="group grid w-full grid-cols-[auto_1fr_auto] items-start gap-4 py-6 text-left md:gap-8 md:py-7"
+                  type="button"
+                  onMouseEnter={() => setActiveId(service.id)}
+                  onFocus={() => setActiveId(service.id)}
+                  onClick={() => {
+                    if (canHover()) return
+                    setActiveId((current) => (current === service.id ? null : service.id))
+                  }}
+                  className="group grid w-full grid-cols-[auto_1fr_auto] items-start gap-4 py-6 text-left transition-[padding] duration-300 md:gap-8 md:py-7"
                   aria-expanded={isActive}
                 >
-                  <span className="pt-1 text-xs tracking-[0.16em] text-white/40">
+                  <span className="pt-1 text-xs tracking-[0.16em] text-mute">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <span>
-                    <span className="display block text-2xl text-[var(--on-ink)] md:text-3xl">{service.title}</span>
+                    <span className="display block text-2xl text-ink md:text-3xl">{service.title}</span>
                     <span
-                      className={`grid transition-[grid-template-rows] duration-300 ${
+                      className={`grid transition-[grid-template-rows] duration-300 ease-out ${
                         isActive ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
                       }`}
                     >
                       <span className="overflow-hidden">
-                        <span className="mt-4 block max-w-lg text-sm leading-relaxed text-white/60 md:text-base">
+                        <span className="mt-4 block max-w-lg pb-1 text-sm leading-relaxed text-mute md:text-base">
                           {service.description}
                         </span>
                       </span>
                     </span>
                   </span>
                   <span
-                    className={`mt-2 inline-block h-3 w-3 border border-white/50 transition ${
-                      isActive ? "bg-[var(--on-ink)]" : ""
+                    className={`theme-mark mt-2 inline-block h-3 w-3 border border-ink/40 transition duration-300 ${
+                      isActive ? "is-active bg-ink" : ""
                     }`}
                     aria-hidden="true"
                   />

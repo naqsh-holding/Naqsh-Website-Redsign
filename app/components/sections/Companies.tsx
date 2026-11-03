@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import { withBase } from "@/app/lib/base-path"
 import type { Company } from "@/app/types"
 
 const companies: Company[] = [
@@ -9,6 +10,7 @@ const companies: Company[] = [
     name: "6 Degrees Technologies",
     description: "Technology & Smart Solutions",
     image: "https://hel1.your-objectstorage.com/naqsh-pord/Naqsh Website-01.png",
+    logo: "/companies/6-degrees.png",
     website: "https://6degrees.com.sa/en/",
   },
   {
@@ -16,13 +18,15 @@ const companies: Company[] = [
     name: "Burooj Air",
     description: "Aviation Services & Solutions",
     image: "https://hel1.your-objectstorage.com/naqsh-pord/Naqsh Website-03.png",
+    logo: "/companies/burooj-air.svg",
     website: "https://buroojair.com/",
   },
   {
     id: 3,
-    name: "Promotion Efficiency for Advertising",
+    name: "Promotion Efficiency",
     description: "Marketing & Creative Production",
     image: "https://hel1.your-objectstorage.com/naqsh-pord/Naqsh Website-05.png",
+    logo: "/companies/promotion-efficiency.png",
     website: "https://www.promoe.com.sa/",
   },
   {
@@ -30,64 +34,73 @@ const companies: Company[] = [
     name: "Burooj",
     description: "Real Estate Development & Construction",
     image: "https://hel1.your-objectstorage.com/naqsh-pord/Naqsh Website-04.png",
+    logo: "/companies/burooj.svg",
     website: "https://www.burooj.pro/",
   },
   {
     id: 5,
-    name: "Efficiency Center Business Inc.",
+    name: "Efficiency Center",
     description: "Business Incubation & Co-working",
     image: "https://hel1.your-objectstorage.com/naqsh-pord/Naqsh Website-02.png",
+    logo: "/companies/efficiency-center.png",
     website: "https://www.efficiencys.com.sa/",
   },
 ]
 
 export default function Companies() {
   return (
-    <section id="companies" className="bg-paper pb-8 md:pb-12">
-      <div className="site-wrap">
-        <div className="grid gap-8 border-t border-ink/15 py-16 lg:grid-cols-12 lg:py-20">
-          <p className="label lg:col-span-4">Our companies</p>
-          <h2 className="display text-[clamp(1.8rem,3.6vw,3.1rem)] leading-[1.05] text-ink lg:col-span-8">
+    <section id="companies" className="bg-paper py-20 md:py-28 lg:py-32">
+      <div className="site-wrap grid gap-12 lg:grid-cols-12 lg:gap-10 xl:gap-16">
+        <div className="lg:col-span-4">
+          <h2 className="display text-[clamp(2rem,4vw,3.4rem)] text-ink">Our companies</h2>
+          <p className="mt-6 max-w-sm text-[0.98rem] font-light leading-[1.75] text-ink/75">
             A diverse portfolio of innovative companies spanning technology, real estate, aviation, and marketing.
-          </h2>
+          </p>
         </div>
-      </div>
 
-      <ul>
-        {companies.map((company, index) => (
-          <li key={company.id} className="border-t border-ink/15 last:border-b">
-            <a
-              href={company.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="site-wrap group grid items-stretch gap-8 py-10 md:py-14 lg:grid-cols-12 lg:gap-12"
-            >
-              <div className="relative aspect-[4/5] overflow-hidden bg-ink/5 lg:col-span-6 lg:aspect-[16/10]">
-                <Image
-                  src={company.image}
-                  alt={company.name}
-                  fill
-                  className="object-cover transition duration-700 group-hover:scale-[1.03]"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  unoptimized
-                  priority={index < 2}
-                />
-              </div>
-              <div className="flex flex-col justify-end lg:col-span-6 lg:py-4">
-                <span className="label text-ink/40">{String(index + 1).padStart(2, "0")}</span>
-                <h3 className="display mt-4 text-[clamp(1.8rem,3.2vw,3rem)] text-ink">{company.name}</h3>
-                <p className="mt-3 text-mute">{company.description}</p>
-                <span className="arrow-link mt-8 text-ink">
-                  <span className="arrow-line">Visit company</span>
-                  <span className="arrow" aria-hidden="true">
-                    →
-                  </span>
-                </span>
-              </div>
-            </a>
-          </li>
-        ))}
-      </ul>
+        <ul className="company-grid border-t border-ink/15 lg:col-span-8 sm:grid sm:grid-cols-2 xl:grid-cols-3">
+          {companies.map((company) => (
+            <li key={company.id} className="company-cell border-b border-ink/15">
+              <a
+                href={company.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="company-tile group relative flex min-h-[240px] flex-col justify-between overflow-hidden bg-paper px-6 py-7 md:min-h-[280px] md:px-7 md:py-8"
+                aria-label={`Visit ${company.name}`}
+              >
+                <div className="company-media pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 group-focus-visible:opacity-100">
+                  <Image
+                    src={company.image}
+                    alt=""
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1280px) 40vw, 28vw"
+                    unoptimized
+                  />
+                  <div className="absolute inset-0 bg-ink/45" />
+                </div>
+
+                <div className="relative z-10 flex h-14 items-center justify-center pt-4">
+                  <img
+                    src={withBase(company.logo)}
+                    alt=""
+                    className="company-logo max-h-11 w-auto max-w-[72%] object-contain"
+                  />
+                </div>
+
+                <div className="relative z-10 mt-auto">
+                  <p className="company-name text-[0.82rem] font-medium tracking-[0.02em] text-ink transition-colors duration-500 group-hover:text-white group-focus-visible:text-white">
+                    {company.name}
+                  </p>
+                  <p className="company-desc mt-1 text-[0.72rem] text-mute transition-colors duration-500 group-hover:text-white/70 group-focus-visible:text-white/70">
+                    {company.description}
+                  </p>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   )
 }

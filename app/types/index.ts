@@ -14,6 +14,7 @@ export interface Company {
   name: string
   description: string
   image: string
+  logo: string
   website: string
 }
 
