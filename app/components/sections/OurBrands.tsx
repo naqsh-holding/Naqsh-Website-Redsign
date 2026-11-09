@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import { useLocale } from "../../lib/i18n/LocaleProvider"
 
 const brands = [
   { id: 1, name: "Pepsi", logo: "https://hel1.your-objectstorage.com/naqsh-pord/images/brands/pepsi.png", row: 1 },
@@ -70,14 +71,16 @@ function Row({ row, reverse }: { row: number; reverse?: boolean }) {
 }
 
 export default function OurBrands() {
+  const { t } = useLocale()
+
   return (
     <section id="brands" className="bg-mist py-24 md:py-32">
-      <div className="site-wrap mb-14 md:mb-20">
-        <p className="label">Partnerships</p>
-        <h2 className="display mt-4 text-[clamp(2rem,4vw,3.4rem)] text-ink">Trusted by industry leaders</h2>
-        <p className="mt-4 max-w-xl text-mute">Partnerships built on trust, impact, and long-term success.</p>
+      <div className="reveal site-wrap mb-14 md:mb-20">
+        <p className="label">{t.brands.label}</p>
+        <h2 className="display mt-4 text-[clamp(2rem,4vw,3.4rem)] text-ink">{t.brands.title}</h2>
+        <p className="mt-4 max-w-xl text-mute">{t.brands.lede}</p>
       </div>
-      <div className="space-y-16 md:space-y-20">
+      <div className="reveal reveal-d2 space-y-16 md:space-y-20">
         <Row row={1} />
         <Row row={2} reverse />
         <Row row={3} />

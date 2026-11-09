@@ -2,12 +2,14 @@
 
 import { useEffect, useRef, useState } from "react"
 import { withBase } from "../../lib/base-path"
+import { useLocale } from "../../lib/i18n/LocaleProvider"
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [ready, setReady] = useState(false)
   const [finished, setFinished] = useState(false)
   const [hasSound, setHasSound] = useState(false)
+  const { t, locale } = useLocale()
 
   useEffect(() => {
     const video = videoRef.current
@@ -228,20 +230,32 @@ export default function Hero() {
         aria-hidden={!ready}
       >
         <div className="px-5 sm:px-8 lg:px-12 xl:px-16">
-          <h1 className="hero-in display max-w-[11ch] text-[clamp(2.85rem,7.6vw,6.4rem)] text-white">
-            To Leave
+          <h1
+            className={`hero-in display text-[clamp(2.85rem,7.6vw,6.4rem)] text-white ${
+              locale === "ar" ? "max-w-[9ch] leading-[1.2]" : "max-w-[11ch]"
+            }`}
+            lang={locale}
+            dir={locale === "ar" ? "rtl" : "ltr"}
+          >
+            {t.hero.titleLine1}
             <br />
-            a Trace
+            {t.hero.titleLine2}
           </h1>
-          <p className="hero-in hero-lede mt-8 max-w-[28ch] text-[0.9rem] font-light leading-[1.7] md:mt-12 md:text-[0.98rem]">
-            A Saudi holding company investing across technology, media, real estate, and aviation.
+          <p
+            className={`hero-in hero-lede mt-8 text-[0.9rem] font-light leading-[1.7] md:mt-12 md:text-[0.98rem] ${
+              locale === "ar" ? "max-w-[32ch]" : "max-w-[28ch]"
+            }`}
+            lang={locale}
+            dir={locale === "ar" ? "rtl" : "ltr"}
+          >
+            {t.hero.lede}
           </p>
         </div>
       </div>
 
       {!hasSound && !finished && (
         <button type="button" className="hero-sound" onClick={enableSound}>
-          Enable sound
+          {t.hero.enableSound}
         </button>
       )}
     </section>

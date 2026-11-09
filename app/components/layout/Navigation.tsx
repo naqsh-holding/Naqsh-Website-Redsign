@@ -3,14 +3,7 @@
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { withBase } from "../../lib/base-path"
-
-const links = [
-  { label: "About", href: "/#about" },
-  { label: "Companies", href: "/#companies" },
-  { label: "Sectors", href: "/#services" },
-  { label: "News", href: "/news" },
-  { label: "Projects", href: "/projects" },
-]
+import { useLocale } from "../../lib/i18n/LocaleProvider"
 
 interface NavigationProps {
   forceTheme?: "light" | "dark"
@@ -22,6 +15,15 @@ interface NavigationProps {
 export default function Navigation({ overlay = false }: NavigationProps = {}) {
   const [open, setOpen] = useState(false)
   const [solid, setSolid] = useState(!overlay)
+  const { t, toggleLocale } = useLocale()
+
+  const links = [
+    { label: t.nav.about, href: "/#about" },
+    { label: t.nav.companies, href: "/#companies" },
+    { label: t.nav.sectors, href: "/#services" },
+    { label: t.nav.news, href: "/news" },
+    { label: t.nav.projects, href: "/projects" },
+  ]
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : ""
@@ -51,7 +53,7 @@ export default function Navigation({ overlay = false }: NavigationProps = {}) {
         aria-label="Main navigation"
       >
         <div className={pill}>
-          <Link href="/" className="nav-logo" aria-label="Naqsh Holding Company Home">
+          <Link href="/" className="nav-logo" aria-label={t.nav.home}>
             <img
               src={withBase("/naqsh-white.png")}
               alt="Naqsh Holding Company Logo"
@@ -60,9 +62,9 @@ export default function Navigation({ overlay = false }: NavigationProps = {}) {
               className="h-[26px] w-[26px] object-contain"
             />
           </Link>
-          <div className="hidden items-center pr-2 md:flex" role="navigation">
+          <div className="hidden items-center pe-2 md:flex" role="navigation">
             {links.map((link) => (
-              <Link key={link.label} href={link.href} className="nav-link">
+              <Link key={link.href} href={link.href} className="nav-link">
                 {link.label}
               </Link>
             ))}
@@ -70,13 +72,21 @@ export default function Navigation({ overlay = false }: NavigationProps = {}) {
         </div>
 
         <div className="pointer-events-auto flex items-center gap-2">
-          <Link href="/contact" className={`${pill} nav-contact hidden sm:inline-flex`} aria-label="Contact us">
-            Contact us
+          <button
+            type="button"
+            className={`${pill} nav-lang`}
+            onClick={toggleLocale}
+            aria-label={t.nav.switchLabel}
+          >
+            {t.nav.switchTo}
+          </button>
+          <Link href="/contact" className={`${pill} nav-contact hidden sm:inline-flex`} aria-label={t.nav.contact}>
+            {t.nav.contact}
           </Link>
           <button
             className={`${pill} nav-menu md:hidden`}
             onClick={() => setOpen((v) => !v)}
-            aria-label="Toggle mobile navigation menu"
+            aria-label={t.nav.menu}
             aria-expanded={open}
             aria-controls="mobile-menu"
           >
@@ -101,7 +111,7 @@ export default function Navigation({ overlay = false }: NavigationProps = {}) {
         <div className="site-wrap flex flex-col gap-2">
           {links.map((link) => (
             <Link
-              key={link.label}
+              key={link.href}
               href={link.href}
               className="display py-3 text-4xl text-ink"
               onClick={() => setOpen(false)}
@@ -110,8 +120,18 @@ export default function Navigation({ overlay = false }: NavigationProps = {}) {
             </Link>
           ))}
           <Link href="/contact" className="display py-3 text-4xl text-ink" onClick={() => setOpen(false)}>
-            Contact
+            {t.nav.contactShort}
           </Link>
+          <button
+            type="button"
+            className="display py-3 text-start text-4xl text-ink"
+            onClick={() => {
+              toggleLocale()
+              setOpen(false)
+            }}
+          >
+            {t.nav.switchTo}
+          </button>
         </div>
       </div>
     </header>

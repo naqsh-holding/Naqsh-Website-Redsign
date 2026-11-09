@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { withBase } from "@/app/lib/base-path"
 import type { Company } from "@/app/types"
+import { useLocale } from "@/app/lib/i18n/LocaleProvider"
 
 const companies: Company[] = [
   {
@@ -48,19 +49,24 @@ const companies: Company[] = [
 ]
 
 export default function Companies() {
+  const { t } = useLocale()
+
   return (
     <section id="companies" className="bg-paper py-20 md:py-28 lg:py-32">
       <div className="site-wrap grid gap-12 lg:grid-cols-12 lg:gap-10 xl:gap-16">
-        <div className="lg:col-span-4">
-          <h2 className="display text-[clamp(2rem,4vw,3.4rem)] text-ink">Our companies</h2>
-          <p className="mt-6 max-w-sm text-[0.98rem] font-light leading-[1.75] text-ink/75">
-            A diverse portfolio of innovative companies spanning technology, real estate, aviation, and marketing.
-          </p>
+        <div className="reveal lg:col-span-4">
+          <h2 className="display text-[clamp(2rem,4vw,3.4rem)] text-ink">{t.companies.title}</h2>
+          <p className="mt-6 max-w-sm text-[0.98rem] font-light leading-[1.75] text-ink/75">{t.companies.lede}</p>
         </div>
 
         <ul className="company-grid border-t border-ink/15 lg:col-span-8 sm:grid sm:grid-cols-2 xl:grid-cols-3">
-          {companies.map((company) => (
-            <li key={company.id} className="company-cell border-b border-ink/15">
+          {companies.map((company, index) => (
+            <li
+              key={company.id}
+              className={`reveal company-cell border-b border-ink/15 ${
+                index % 3 === 1 ? "reveal-d1" : index % 3 === 2 ? "reveal-d2" : ""
+              }`}
+            >
               <a
                 href={company.website}
                 target="_blank"

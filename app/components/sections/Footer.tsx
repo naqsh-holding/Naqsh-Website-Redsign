@@ -1,20 +1,25 @@
+"use client"
+
 import Link from "next/link"
 import { withBase } from "../../lib/base-path"
+import { useLocale } from "../../lib/i18n/LocaleProvider"
 
 export default function Footer() {
+  const { t } = useLocale()
+
   const navigationLinks = [
-    { name: "About", href: "/#about" },
-    { name: "Companies", href: "/#companies" },
-    { name: "Services", href: "/#services" },
-    { name: "Projects", href: "/projects" },
-    { name: "News", href: "/news" },
-    { name: "Brands", href: "/#brands" },
-    { name: "Contact", href: "/contact" },
+    { name: t.nav.about, href: "/#about" },
+    { name: t.nav.companies, href: "/#companies" },
+    { name: t.nav.sectors, href: "/#services" },
+    { name: t.nav.projects, href: "/projects" },
+    { name: t.nav.news, href: "/news" },
+    { name: t.brands.label, href: "/#brands" },
+    { name: t.nav.contactShort, href: "/contact" },
   ]
 
   const legalLinks = [
-    { name: "Privacy Policy", href: "/privacy-policy" },
-    { name: "Terms of Service", href: "/terms-of-service" },
+    { name: t.footer.privacy, href: "/privacy-policy" },
+    { name: t.footer.terms, href: "/terms-of-service" },
   ]
 
   return (
@@ -25,17 +30,14 @@ export default function Footer() {
             <Link href="/" className="inline-block" aria-label="Naqsh Home">
               <img src={withBase("/naqsh-white.png")} alt="Naqsh Logo" width={135} height={45} className="h-9 w-auto" />
             </Link>
-            <p className="mt-6 max-w-sm text-sm leading-relaxed text-white/60">
-              To Leave a Trace — Naqsh Holding Company is an investment leader with diverse subsidiaries across
-              technology, business incubation, marketing, real estate, and aviation sectors.
-            </p>
+            <p className="mt-6 max-w-sm text-sm leading-relaxed text-white/60">{t.footer.blurb}</p>
           </div>
 
           <div className="lg:col-span-2">
-            <h3 className="label">Explore</h3>
+            <h3 className="label">{t.footer.explore}</h3>
             <ul className="mt-5 space-y-2.5">
               {navigationLinks.map((item) => (
-                <li key={item.name}>
+                <li key={item.href}>
                   <Link href={item.href} className="text-sm text-white/70 transition hover:text-white">
                     {item.name}
                   </Link>
@@ -45,10 +47,10 @@ export default function Footer() {
           </div>
 
           <div className="lg:col-span-2">
-            <h3 className="label">Legal</h3>
+            <h3 className="label">{t.footer.legal}</h3>
             <ul className="mt-5 space-y-2.5">
               {legalLinks.map((item) => (
-                <li key={item.name}>
+                <li key={item.href}>
                   <Link href={item.href} className="text-sm text-white/70 transition hover:text-white">
                     {item.name}
                   </Link>
@@ -58,7 +60,7 @@ export default function Footer() {
           </div>
 
           <div className="lg:col-span-3">
-            <h3 className="label">Connect</h3>
+            <h3 className="label">{t.footer.connect}</h3>
             <ul className="mt-5 space-y-2.5">
               <li>
                 <a
@@ -85,7 +87,9 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 flex flex-col gap-3 border-t border-white/10 pt-8 text-xs text-white/40 md:flex-row md:items-center md:justify-between">
-          <p>© {new Date().getFullYear()} Naqsh Holding Company. All rights reserved.</p>
+          <p>
+            © {new Date().getFullYear()} Naqsh Holding Company. {t.footer.rights}
+          </p>
           <p>Khobar, Eastern Province, Saudi Arabia</p>
         </div>
       </div>

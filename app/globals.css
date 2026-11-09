@@ -9,6 +9,9 @@
   --muted: #6a6760;
   --line: color-mix(in srgb, var(--ink) 14%, transparent);
   --on-ink: #f4f1ea;
+  --theme-t: 0;
+  --theme-bg: color-mix(in srgb, var(--ink) calc(var(--theme-t) * 100%), var(--paper));
+  --theme-mist: color-mix(in srgb, var(--ink) calc(var(--theme-t) * 100%), var(--mist));
   --bg: var(--paper);
   --fg: var(--ink);
   --radius: 0px;
@@ -44,44 +47,97 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 5.5rem;
-    background: var(--paper);
+    background: var(--theme-bg);
     color: var(--ink);
-    transition: background-color 0.75s cubic-bezier(0.22, 1, 0.36, 1), color 0.75s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   body {
-    background: var(--paper);
+    background: var(--theme-bg);
     color: var(--ink);
     font-family: var(--font-body), sans-serif;
     font-feature-settings: "ss01" 1, "kern" 1;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    transition: background-color 0.75s cubic-bezier(0.22, 1, 0.36, 1), color 0.75s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  html[data-theme="dark"],
-  html[data-theme="dark"] body {
-    background: var(--ink);
-    color: var(--on-ink);
+  #main {
+    background-color: var(--theme-bg);
+    transition: color 1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Liquid paper → ink wash across the page through CEO → sectors */
+  #about,
+  #companies,
+  #ceo-message,
+  #services,
+  #news,
+  #projects,
+  #contact {
+    background-color: var(--theme-bg) !important;
+    transition: color 1s cubic-bezier(0.22, 1, 0.36, 1), border-color 1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  #brands {
+    background-color: var(--theme-mist) !important;
+    transition: color 1s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   html[data-theme="dark"] #main {
-    background-color: transparent;
     color: var(--on-ink);
   }
 
   html[data-theme="dark"] #about,
   html[data-theme="dark"] #companies,
   html[data-theme="dark"] #ceo-message,
-  html[data-theme="dark"] #services {
-    background-color: transparent !important;
+  html[data-theme="dark"] #services,
+  html[data-theme="dark"] #news,
+  html[data-theme="dark"] #projects,
+  html[data-theme="dark"] #brands,
+  html[data-theme="dark"] #contact {
     color: var(--on-ink);
-    transition: background-color 0.75s cubic-bezier(0.22, 1, 0.36, 1), color 0.75s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  #ceo-message,
-  #services {
-    transition: background-color 0.75s cubic-bezier(0.22, 1, 0.36, 1), color 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  #about .text-ink,
+  #about .display,
+  #about .arrow-link,
+  #about .label,
+  #about .text-mute,
+  #companies .text-ink,
+  #companies .display,
+  #companies h3,
+  #companies .arrow-link,
+  #companies .label,
+  #companies .text-mute,
+  #companies .company-name,
+  #companies .company-desc,
+  #ceo-message .text-ink,
+  #ceo-message .display,
+  #ceo-message .label,
+  #ceo-message .text-mute,
+  #ceo-message blockquote,
+  #services .text-ink,
+  #services .display,
+  #services .label,
+  #services .text-mute,
+  #news .text-ink,
+  #news .display,
+  #news .arrow-link,
+  #news .label,
+  #news .text-mute,
+  #projects .text-ink,
+  #projects .display,
+  #projects .arrow-link,
+  #projects .label,
+  #projects .text-mute,
+  #brands .text-ink,
+  #brands .display,
+  #brands .label,
+  #brands .text-mute,
+  #contact .text-ink,
+  #contact .display,
+  #contact .label,
+  #contact .text-mute {
+    transition: color 1s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   html[data-theme="dark"] #about .text-ink,
@@ -95,8 +151,19 @@
   html[data-theme="dark"] #companies .arrow-link,
   html[data-theme="dark"] #ceo-message .text-ink,
   html[data-theme="dark"] #ceo-message .display,
+  html[data-theme="dark"] #ceo-message blockquote,
   html[data-theme="dark"] #services .text-ink,
-  html[data-theme="dark"] #services .display {
+  html[data-theme="dark"] #services .display,
+  html[data-theme="dark"] #news .text-ink,
+  html[data-theme="dark"] #news .display,
+  html[data-theme="dark"] #news .arrow-link,
+  html[data-theme="dark"] #projects .text-ink,
+  html[data-theme="dark"] #projects .display,
+  html[data-theme="dark"] #projects .arrow-link,
+  html[data-theme="dark"] #brands .text-ink,
+  html[data-theme="dark"] #brands .display,
+  html[data-theme="dark"] #contact .text-ink,
+  html[data-theme="dark"] #contact .display {
     color: var(--on-ink) !important;
   }
 
@@ -112,14 +179,31 @@
   html[data-theme="dark"] #ceo-message .label,
   html[data-theme="dark"] #ceo-message .text-mute,
   html[data-theme="dark"] #services .label,
-  html[data-theme="dark"] #services .text-mute {
+  html[data-theme="dark"] #services .text-mute,
+  html[data-theme="dark"] #news .label,
+  html[data-theme="dark"] #news .text-mute,
+  html[data-theme="dark"] #projects .label,
+  html[data-theme="dark"] #projects .text-mute,
+  html[data-theme="dark"] #brands .label,
+  html[data-theme="dark"] #brands .text-mute,
+  html[data-theme="dark"] #contact .label,
+  html[data-theme="dark"] #contact .text-mute {
     color: rgba(244, 241, 234, 0.58) !important;
+  }
+
+  html[data-theme="dark"] #news .border-ink\/15,
+  html[data-theme="dark"] #projects .border-ink\/15 {
+    border-color: rgba(255, 255, 255, 0.14) !important;
   }
 
   html[data-theme="dark"] #companies .border-ink\/15,
   html[data-theme="dark"] #about .border-ink\/15,
   html[data-theme="dark"] #companies .company-cell {
     border-color: rgba(255, 255, 255, 0.14) !important;
+  }
+
+  #companies .company-tile {
+    transition: background-color 1s cubic-bezier(0.22, 1, 0.36, 1), color 1s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   html[data-theme="dark"] #companies .company-tile {
@@ -333,7 +417,8 @@
     color: #fff;
   }
 
-  .nav-contact {
+  .nav-contact,
+  .nav-lang {
     padding: 0 1.45rem;
     font-size: 0.68rem;
     font-weight: 500;
@@ -341,9 +426,53 @@
     text-transform: uppercase;
   }
 
+  .nav-lang {
+    letter-spacing: 0.08em;
+    text-transform: none;
+  }
+
+  html[lang="ar"] .nav-link,
+  html[lang="ar"] .nav-contact {
+    letter-spacing: 0.04em;
+    text-transform: none;
+  }
+
   .nav-contact:hover,
-  .nav-contact:focus-visible {
+  .nav-contact:focus-visible,
+  .nav-lang:hover,
+  .nav-lang:focus-visible {
     background: rgba(18, 18, 18, 0.72);
+  }
+
+  html[lang="ar"] body {
+    font-family: var(--font-arabic), var(--font-body), sans-serif;
+  }
+
+  html[lang="ar"] .display,
+  html[lang="ar"] .label,
+  html[lang="ar"] h1,
+  html[lang="ar"] h2,
+  html[lang="ar"] h3,
+  html[lang="ar"] blockquote {
+    font-family: var(--font-arabic), sans-serif !important;
+    letter-spacing: 0 !important;
+    word-spacing: normal;
+    text-transform: none !important;
+  }
+
+  html[lang="ar"] .hero-copy h1 {
+    max-width: 8ch;
+    line-height: 1.2;
+    font-weight: 700;
+  }
+
+  html[lang="ar"] .hero-lede {
+    max-width: 28ch;
+    letter-spacing: 0;
+  }
+
+  html[lang="ar"] .label {
+    letter-spacing: 0.04em !important;
   }
 
   .nav-menu {
@@ -476,7 +605,7 @@ header {
   position: fixed;
   left: 1.25rem;
   bottom: 1.5rem;
-  z-index: 210;
+  z-index: 60;
   min-height: 44px;
   color: #fff;
   font-size: 0.72rem;
@@ -487,6 +616,11 @@ header {
   transition: opacity 0.3s ease;
 }
 
+html[data-intro] .hero-sound {
+  opacity: 0;
+  pointer-events: none;
+}
+
 @media (min-width: 768px) {
   .hero-sound { left: 2rem; }
 }
@@ -494,6 +628,20 @@ header {
 @media (min-width: 1024px) {
   .hero-sound { left: 3rem; }
 }
+
+html[dir="rtl"] .hero-sound {
+  left: auto;
+  right: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  html[dir="rtl"] .hero-sound { right: 2rem; }
+}
+
+@media (min-width: 1024px) {
+  html[dir="rtl"] .hero-sound { right: 3rem; }
+}
+
 
 .hero-sound:hover,
 .hero-sound:focus-visible,
@@ -583,21 +731,25 @@ html[data-intro] .intro-logo-frame {
 
 .reveal {
   opacity: 0;
-  transform: translateY(22px);
-  animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform: translateY(28px);
+  transition:
+    opacity 1.05s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.05s cubic-bezier(0.22, 1, 0.36, 1),
+    color 1s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 1s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 1s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
 }
 
-.reveal-d1 { animation-delay: 0.08s; }
-.reveal-d2 { animation-delay: 0.16s; }
-.reveal-d3 { animation-delay: 0.28s; }
-.reveal-d4 { animation-delay: 0.4s; }
-
-@keyframes rise {
-  to {
-    opacity: 1;
-    transform: none;
-  }
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
 }
+
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.32s; }
+.reveal-d4 { transition-delay: 0.44s; }
 
 @keyframes marquee {
   from { transform: translateX(0); }
@@ -628,10 +780,6 @@ html[data-intro] .intro-logo-frame {
 
   html,
   body,
-  html[data-theme="dark"] #about,
-  html[data-theme="dark"] #companies {
-    transition-duration: 0.01ms !important;
-  }
 
   .reveal,
   .reveal-d1,
@@ -640,7 +788,7 @@ html[data-intro] .intro-logo-frame {
   .reveal-d4 {
     opacity: 1;
     transform: none;
-    animation: none;
+    transition: none;
   }
 
   .marquee-track {

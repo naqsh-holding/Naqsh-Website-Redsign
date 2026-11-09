@@ -2,8 +2,10 @@
 
 import type React from "react"
 import { useState } from "react"
+import { useLocale } from "../../lib/i18n/LocaleProvider"
 
 export default function ContactUs() {
+  const { t } = useLocale()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -37,38 +39,31 @@ export default function ContactUs() {
   return (
     <section id="contact" className="bg-paper py-24 md:py-32 lg:py-40">
       <div className="site-wrap grid gap-16 lg:grid-cols-12">
-        <div className="lg:col-span-5">
-          <p className="label">Contact</p>
-          <h2 className="display mt-5 text-[clamp(2.1rem,4vw,3.5rem)] text-ink">Let&apos;s connect and collaborate</h2>
-          <p className="mt-6 max-w-md text-base leading-relaxed text-mute">
-            Whether you&apos;re looking to partner, invest, or simply learn more about our group of companies, we&apos;d
-            love to hear from you.
-          </p>
+        <div className="reveal lg:col-span-5">
+          <p className="label">{t.contact.label}</p>
+          <h2 className="display mt-5 text-[clamp(2.1rem,4vw,3.5rem)] text-ink">{t.contact.title}</h2>
+          <p className="mt-6 max-w-md text-base leading-relaxed text-mute">{t.contact.lede}</p>
 
           <div className="mt-12 space-y-8">
             <div>
-              <h3 className="label">Visit our office</h3>
+              <h3 className="label">{t.contact.visit}</h3>
               <a
                 href="https://maps.google.com/?q=6919+Prince+Turki+Bin+Abdulaziz+Street+Alkhobar+Eastern+Province+Saudi+Arabia"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 block text-ink hover:opacity-70"
+                className="mt-3 block whitespace-pre-line text-ink hover:opacity-70"
               >
-                6919 Prince Turki Bin Abdulaziz Street
-                <br />
-                Alkhobar, Eastern Province
-                <br />
-                Saudi Arabia
+                {t.contact.address}
               </a>
             </div>
             <div>
-              <h3 className="label">Call us</h3>
+              <h3 className="label">{t.contact.call}</h3>
               <a href="tel:0535558889" className="mt-3 block text-ink hover:opacity-70">
                 0535558889
               </a>
             </div>
             <div>
-              <h3 className="label">Email us</h3>
+              <h3 className="label">{t.contact.email}</h3>
               <a href="mailto:contact@naqsh.com.sa" className="mt-3 block text-ink hover:opacity-70">
                 contact@naqsh.com.sa
               </a>
@@ -76,7 +71,7 @@ export default function ContactUs() {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-8 lg:col-span-7">
+        <form onSubmit={handleSubmit} className="reveal reveal-d2 space-y-8 lg:col-span-7">
           <Field id="name" label="Name / الاسم" value={formData.name} onChange={handleInputChange} />
           <Field
             id="email"

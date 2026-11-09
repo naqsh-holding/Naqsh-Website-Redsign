@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react"
 import { isHomePath, withBase } from "../../lib/base-path"
+import { useLocale } from "../../lib/i18n/LocaleProvider"
 
 const STORAGE_KEY = "naqsh-intro-seen"
 
 export default function LoadingScreen() {
   const [exiting, setExiting] = useState(false)
   const [done, setDone] = useState(false)
+  const { t } = useLocale()
 
   useEffect(() => {
     const onHome = isHomePath(location.pathname)
@@ -74,7 +76,7 @@ export default function LoadingScreen() {
         className="intro-sound"
         onClick={() => window.dispatchEvent(new Event("naqsh-unlock-audio"))}
       >
-        Enable sound
+        {t.hero.enableSound}
       </button>
     </div>
   )

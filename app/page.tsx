@@ -1,5 +1,6 @@
 import Navigation from "./components/layout/Navigation"
 import ThemeController from "./components/ThemeController"
+import RevealObserver from "./components/RevealObserver"
 import Hero from "./components/sections/Hero"
 import AboutUs from "./components/sections/AboutUs"
 import Companies from "./components/sections/Companies"
@@ -15,6 +16,7 @@ export default function Home() {
   return (
     <main id="main" className="bg-paper text-ink">
       <ThemeController />
+      <RevealObserver />
       <Navigation overlay />
       <Hero />
       <AboutUs />

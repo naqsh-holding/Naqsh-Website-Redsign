@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { getAllNews, type NewsItem } from "../../lib/data/news"
+import { useLocale } from "../../lib/i18n/LocaleProvider"
 
 const MONTHS_LONG = [
   "January",
@@ -54,6 +55,8 @@ export default function NewsSection() {
   const [newsItems, setNewsItems] = useState<NewsItem[]>([])
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState("All")
+  const { t, locale } = useLocale()
+  const allLabel = t.news.all
 
   useEffect(() => {
     let cancelled = false
@@ -76,27 +79,31 @@ export default function NewsSection() {
         if (category.name) names.add(titleCase(category.name))
       })
     })
-    return ["All", ...Array.from(names)]
-  }, [newsItems])
+    return [allLabel, ...Array.from(names)]
+  }, [newsItems, allLabel])
+
+  useEffect(() => {
+    setFilter(allLabel)
+  }, [allLabel, locale])
 
   const visible = useMemo(() => {
     const filtered =
-      filter === "All"
+      filter === allLabel
         ? newsItems
         : newsItems.filter((item) =>
             item.categories.some((category) => titleCase(category.name) === filter)
           )
     return filtered.slice(0, 3)
-  }, [filter, newsItems])
+  }, [filter, newsItems, allLabel])
 
   return (
     <section id="news" className="bg-paper py-24 md:py-32">
       <div className="site-wrap">
-        <div className="border-b border-ink/15 pb-8 md:pb-10">
+        <div className="reveal border-b border-ink/15 pb-8 md:pb-10">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <h2 className="display text-[clamp(2.4rem,5vw,4.2rem)] text-ink">Newsroom</h2>
+            <h2 className="display text-[clamp(2.4rem,5vw,4.2rem)] text-ink">{t.news.title}</h2>
             <Link href="/news" className="arrow-link text-ink">
-              <span className="arrow-line">See all news</span>
+              <span className="arrow-line">{t.news.seeAll}</span>
               <span className="arrow" aria-hidden="true">
                 →
               </span>
@@ -127,16 +134,21 @@ export default function NewsSection() {
         </div>
 
         {loading ? (
-          <p className="py-16 text-mute">Loading news…</p>
+          <p className="py-16 text-mute">{t.news.loading}</p>
         ) : visible.length === 0 ? (
-          <p className="py-16 text-mute">News will appear here shortly.</p>
+          <p className="py-16 text-mute">{t.news.empty}</p>
         ) : (
           <ul className="newsroom-grid grid border-b border-ink/15 md:grid-cols-3">
-            {visible.map((item) => {
+            {visible.map((item, index) => {
               const category = categoryLabel(item)
               const dateLabel = formatNewsDate(item)
               return (
-                <li key={item.id} className="newsroom-cell border-b border-ink/15 md:border-b-0 md:border-r md:last:border-r-0">
+                <li
+                  key={item.id}
+                  className={`reveal newsroom-cell border-b border-ink/15 md:border-b-0 md:border-r md:last:border-r-0 ${
+                    index === 1 ? "reveal-d1" : index === 2 ? "reveal-d2" : ""
+                  }`}
+                >
                   <Link
                     href={`/news/${item.slug}`}
                     className="group flex h-full flex-col px-0 py-8 md:px-6 md:py-10 lg:px-8"

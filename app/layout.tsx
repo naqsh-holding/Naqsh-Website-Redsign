@@ -1,11 +1,12 @@
 import type React from "react"
 import type { Metadata } from "next"
 import "./globals.css"
-import { syne, outfit } from "./lib/fonts"
+import { syne, outfit, notoArabic } from "./lib/fonts"
 import { criticalCSS } from "./lib/critical-css"
 import { BASE_PATH, withBase } from "./lib/base-path"
 import BFCacheReload from "./components/ui/BFCacheReload"
 import LoadingScreen from "./components/sections/LoadingScreen"
+import Providers from "./components/Providers"
 
 export const metadata: Metadata = {
   title: "Naqsh Holding Company | Investment Leader | To Leave a Trace",
@@ -104,11 +105,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${syne.variable} ${outfit.variable}`}>
+    <html lang="en" className={`${syne.variable} ${outfit.variable} ${notoArabic.variable}`}>
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var p=location.pathname.replace(/\\/+$/,'')||'/';var b=${JSON.stringify(
+            __html: `(function(){try{var l=localStorage.getItem('naqsh-lang');if(l==='ar'){document.documentElement.lang='ar';document.documentElement.dir='rtl';document.documentElement.setAttribute('data-locale','ar');}var p=location.pathname.replace(/\\/+$/,'')||'/';var b=${JSON.stringify(
               (BASE_PATH || "").replace(/\/+$/, "") || "/"
             )};if(p===b){document.documentElement.setAttribute('data-hero-pending','1');if(sessionStorage.getItem('naqsh-intro-seen')!=='1'){document.documentElement.setAttribute('data-intro','1');}}}catch(e){}})();`,
           }}
@@ -253,9 +254,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
-        <LoadingScreen />
-        {children}
-        <BFCacheReload />
+        <Providers>
+          <LoadingScreen />
+          {children}
+          <BFCacheReload />
+        </Providers>
       </body>
     </html>
   )
