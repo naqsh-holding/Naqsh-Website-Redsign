@@ -49,7 +49,6 @@ export default function Navigation({ overlay = false }: NavigationProps = {}) {
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50">
       <nav
         className="pointer-events-none flex items-start justify-between px-4 pt-4 sm:px-6 md:px-8 md:pt-5 lg:px-10"
-        role="banner"
         aria-label="Main navigation"
       >
         <div className={pill}>
@@ -59,10 +58,10 @@ export default function Navigation({ overlay = false }: NavigationProps = {}) {
               alt="Naqsh Holding Company Logo"
               width={40}
               height={40}
-              className="h-[26px] w-[26px] object-contain"
+              className="h-[28px] w-[28px] object-contain"
             />
           </Link>
-          <div className="hidden items-center pe-2 md:flex" role="navigation">
+          <div className="hidden items-center pe-3 md:flex">
             {links.map((link) => (
               <Link key={link.href} href={link.href} className="nav-link">
                 {link.label}
@@ -90,7 +89,6 @@ export default function Navigation({ overlay = false }: NavigationProps = {}) {
             aria-expanded={open}
             aria-controls="mobile-menu"
           >
-            <span className="sr-only">Menu</span>
             <span className="flex w-5 flex-col gap-1.5">
               <span className={`block h-px w-full bg-white transition ${open ? "translate-y-[4px] rotate-45" : ""}`} />
               <span className={`block h-px w-full bg-white transition ${open ? "-translate-y-[4px] -rotate-45" : ""}`} />
@@ -101,8 +99,8 @@ export default function Navigation({ overlay = false }: NavigationProps = {}) {
 
       <div
         id="mobile-menu"
-        className={`pointer-events-none fixed inset-0 z-40 bg-paper pt-24 transition-opacity duration-300 md:hidden ${
-          open ? "pointer-events-auto opacity-100" : "opacity-0"
+        className={`pointer-events-none fixed inset-0 z-40 bg-paper pt-24 transition-[opacity,visibility] duration-300 md:hidden ${
+          open ? "pointer-events-auto visible opacity-100" : "invisible opacity-0"
         }`}
         role="dialog"
         aria-modal="true"

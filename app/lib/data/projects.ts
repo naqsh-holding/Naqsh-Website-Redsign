@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any -- Strapi responses are untyped JSON */
 // lib/data/projects.ts (Strapi-backed version)
 //
 // The data comes from Strapi (site slug "naqsh") instead of being
@@ -95,7 +96,7 @@ function normalizeProject(raw: any): Project {
 			title: s.title_en || '',
 			description: s.description_en || '',
 			images: (s.images || []).map((img: any) => resolveMediaUrl(img.url)),
-			imagePosition: s.image_position === 'above' ? 'above' : 'below',
+			imagePosition: (s.image_position === 'above' ? 'above' : 'below') as ProjectSection['imagePosition'],
 		}))
 		.filter((s) => s.description || s.images.length > 0) // skip fully empty sub-sections
 
@@ -105,7 +106,7 @@ function normalizeProject(raw: any): Project {
 		id: raw.id,
 		title: raw.title_en || '',
 		category: company.toUpperCase(),
-		image: raw.thumbnail ? resolveMediaUrl(raw.thumbnail.url) : '',
+		image: resolveMediaFormat(raw.thumbnail),
 		slug: raw.slug || '',
 		year: parseInt(raw.year, 10) || 0,
 		client: raw.clinet_en || '',
@@ -122,6 +123,14 @@ function normalizeProject(raw: any): Project {
 			duration: raw.Duration || undefined,
 		},
 	}
+}
+
+// Strapi generates resized copies (thumbnail/small/medium/large) of every
+// upload. Cards use the "large" copy so an oversized original (some are 10MB+)
+// is only downloaded on the detail page.
+function resolveMediaFormat(media: any, format = 'large') {
+	if (!media) return ''
+	return resolveMediaUrl(media.formats?.[format]?.url || media.url)
 }
 
 function resolveMediaUrl(url: string) {

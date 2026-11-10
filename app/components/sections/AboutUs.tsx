@@ -7,18 +7,18 @@ export default function AboutUs() {
   const { t } = useLocale()
 
   return (
-    <section id="about" className="bg-paper py-24 md:py-32 lg:py-40">
+    <section id="about" className="bg-paper py-20 md:py-28 lg:py-32">
       <div className="site-wrap">
         <div className="reveal flex items-center gap-2.5">
           <span className="about-mark h-1.5 w-1.5 shrink-0 rounded-full bg-ink" aria-hidden="true" />
           <p className="label !normal-case tracking-[0.04em] text-ink">{t.about.label}</p>
         </div>
 
-        <h2 className="reveal reveal-d1 display mt-10 max-w-[18ch] text-[clamp(2.4rem,5.8vw,4.85rem)] text-ink md:mt-12">
+        <h2 className="reveal reveal-d1 display mt-8 max-w-[18ch] text-[clamp(2.4rem,5.8vw,4.85rem)] text-ink md:mt-10">
           {t.about.title}
         </h2>
 
-        <div className="mt-14 grid gap-10 md:mt-16 md:grid-cols-2 md:gap-12 lg:ml-auto lg:max-w-[52rem] lg:gap-16">
+        <div className="mt-10 grid gap-10 md:mt-12 md:grid-cols-2 md:gap-12 lg:ml-auto lg:max-w-[52rem] lg:gap-16">
           <div className="reveal reveal-d2">
             <p className="text-[0.98rem] font-light leading-[1.75] text-ink/80 md:text-base">{t.about.p1}</p>
             <Link href="/contact" className="arrow-link mt-8 text-ink">

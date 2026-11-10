@@ -28,8 +28,6 @@ export const metadata: Metadata = {
     card: "summary",
     title: "Terms of Service | Naqsh Holding Company",
     description: "Read the terms and conditions governing your use of Naqsh Holding Company's website and services.",
-    creator: "@naqsh_holding",
-    site: "@naqsh_holding",
   },
   alternates: {
     canonical: "https://naqsh.com.sa/terms-of-service",

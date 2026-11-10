@@ -5,6 +5,7 @@ import Link from "next/link"
 import Navigation from "@/app/components/layout/Navigation"
 import Footer from "@/app/components/sections/Footer"
 import type { Project } from "../../lib/data/projects"
+import { useLocale } from "../../lib/i18n/LocaleProvider"
 
 interface ProjectPageClientProps {
   project: Project
@@ -17,6 +18,9 @@ function isVideoUrl(url: string) {
 }
 
 export default function ProjectPageClient({ project }: ProjectPageClientProps) {
+  const { t } = useLocale()
+  const p = t.pages.project
+
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [project.slug])
@@ -29,13 +33,13 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
         <div className="site-wrap">
           <nav className="label">
             <Link href="/projects" className="hover:text-ink">
-              {project.category || "Projects"}
+              {project.category || p.projects}
             </Link>
             <span className="mx-2">/</span>
-            <span className="text-ink">{project.title}</span>
+            <span className="text-ink" dir="auto">{project.title}</span>
           </nav>
 
-          <h1 className="display mt-8 max-w-4xl text-[clamp(2.2rem,5vw,4.6rem)] text-ink">{project.title}</h1>
+          <h1 className="display mt-8 max-w-4xl text-[clamp(2.2rem,5vw,4.6rem)] text-ink" dir="auto">{project.title}</h1>
         </div>
 
         <div className="mt-12 w-full">
@@ -64,32 +68,32 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
           <div className="space-y-12 lg:col-span-7">
             {project.challenge && (
               <div>
-                <h2 className="label">Challenge</h2>
-                <p className="mt-4 text-xl font-light leading-relaxed">{project.challenge}</p>
+                <h2 className="label">{p.challenge}</h2>
+                <p dir="auto" className="mt-4 text-xl font-light leading-relaxed">{project.challenge}</p>
               </div>
             )}
             {project.approach && (
               <div>
-                <h2 className="label">Approach</h2>
-                <p className="mt-4 text-xl font-light leading-relaxed">{project.approach}</p>
+                <h2 className="label">{p.approach}</h2>
+                <p dir="auto" className="mt-4 text-xl font-light leading-relaxed">{project.approach}</p>
               </div>
             )}
           </div>
 
           <aside className="grid gap-8 self-start border-t border-ink/15 pt-8 lg:col-span-4 lg:col-start-9 lg:border-t-0 lg:pt-0">
-            <Meta label="Client" value={project.client} />
+            <Meta label={p.client} value={project.client} />
             <div className="grid grid-cols-2 gap-8">
-              <Meta label="Year" value={String(project.year || "")} />
-              <Meta label="Duration" value={project.stats?.duration} />
+              <Meta label={p.year} value={String(project.year || "")} />
+              <Meta label={p.duration} value={project.stats?.duration} />
             </div>
             <div className="grid grid-cols-2 gap-8">
-              <Meta label="Type" value={project.type} />
-              <Meta label="Company" value={project.company} />
+              <Meta label={p.type} value={project.type} />
+              <Meta label={p.company} value={project.company} />
             </div>
             {project.tags.length > 0 && (
               <div>
-                <h3 className="label">Project tags</h3>
-                <p className="mt-3 text-sm leading-relaxed text-mute">{project.tags.join(" · ")}</p>
+                <h3 className="label">{p.tags}</h3>
+                <p dir="auto" className="mt-3 text-sm leading-relaxed text-mute">{project.tags.join(" · ")}</p>
               </div>
             )}
           </aside>
@@ -99,7 +103,7 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
           {project.sections.map((section, index) => {
             const [firstImage, ...restImages] = section.images
             const description = section.description && (
-              <p className="max-w-3xl text-xl font-light leading-relaxed">{section.description}</p>
+              <p dir="auto" className="max-w-3xl text-xl font-light leading-relaxed">{section.description}</p>
             )
             const images = firstImage && (
               <div className="space-y-6">
@@ -116,7 +120,7 @@ export default function ProjectPageClient({ project }: ProjectPageClientProps) {
 
             return (
               <section key={index}>
-                {section.title && <h2 className="label mb-6">{section.title}</h2>}
+                {section.title && <h2 dir="auto" className="label mb-6">{section.title}</h2>}
                 {section.imagePosition === "above" ? (
                   <div className="space-y-8">
                     {description}
@@ -144,7 +148,7 @@ function Meta({ label, value }: { label: string; value?: string }) {
   return (
     <div>
       <h3 className="label">{label}</h3>
-      <p className="mt-2 text-lg">{value}</p>
+      <p className="mt-2 text-lg" dir="auto">{value}</p>
     </div>
   )
 }

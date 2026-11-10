@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 
   return {
     title: `${project.title} | Naqsh Holding Company`,
-    description: project.description || `Explore ${project.title} - A showcase of innovative work by Naqsh Holding Company.`,
+    description: project.challenge || `Explore ${project.title} - A showcase of innovative work by Naqsh Holding Company.`,
     keywords: [
       project.title,
       "Naqsh Holding projects",
@@ -49,7 +49,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
     ],
     openGraph: {
       title: project.title,
-      description: project.description || `Explore ${project.title} - A showcase of innovative work by Naqsh Holding Company.`,
+      description: project.challenge || `Explore ${project.title} - A showcase of innovative work by Naqsh Holding Company.`,
       url: projectUrl,
       siteName: "Naqsh Holding Company",
       images: [
@@ -66,10 +66,8 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
     twitter: {
       card: "summary_large_image",
       title: project.title,
-      description: project.description || `Explore ${project.title} - A showcase of innovative work by Naqsh Holding Company.`,
+      description: project.challenge || `Explore ${project.title} - A showcase of innovative work by Naqsh Holding Company.`,
       images: [projectImage],
-      creator: "@naqsh_holding",
-      site: "@naqsh_holding",
     },
     alternates: {
       canonical: projectUrl,

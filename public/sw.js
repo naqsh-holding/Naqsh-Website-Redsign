@@ -1,49 +1,17 @@
-// Service Worker for Naqsh Holding Company Website
-const CACHE_NAME = 'naqsh-cache-v1';
-const urlsToCache = [
-  '/',
-  '/contact',
-  '/news',
-  '/projects',
-  '/privacy-policy',
-  '/terms-of-service',
-  '/naqsh-white.png',
-  '/naqsh-black.png',
-  '/favicon.ico'
-];
+// Kill switch for the old cache-first service worker.
+// Browsers re-check this file on navigation; when they pick up this version it
+// deletes every cache, unregisters itself, and reloads open tabs so visitors
+// get the live site instead of a stale cached copy.
+self.addEventListener('install', () => self.skipWaiting())
 
-// Install event - cache resources
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => {
-        return cache.addAll(urlsToCache);
-      })
-  );
-});
-
-// Fetch event - serve from cache when possible
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // Return cached version or fetch from network
-        return response || fetch(event.request);
-      })
-  );
-});
-
-// Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
-  );
-}); 
+    (async () => {
+      const keys = await caches.keys()
+      await Promise.all(keys.map((key) => caches.delete(key)))
+      await self.registration.unregister()
+      const clients = await self.clients.matchAll({ type: 'window' })
+      clients.forEach((client) => client.navigate(client.url))
+    })()
+  )
+})

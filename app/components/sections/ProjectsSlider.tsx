@@ -17,9 +17,6 @@ function projectPreview(project: Project) {
   return PLACEHOLDER
 }
 
-function projectLocation(project: Project) {
-  return project.client || project.company || project.category || "Saudi Arabia"
-}
 
 export default function ProjectsSlider() {
   const [featuredProjects, setFeaturedProjects] = useState<Project[]>([])
@@ -30,7 +27,7 @@ export default function ProjectsSlider() {
     let cancelled = false
     getAllProjects()
       .then((all) => {
-        if (!cancelled) setFeaturedProjects(all.slice(0, 4))
+        if (!cancelled) setFeaturedProjects(all.slice(0, 3))
       })
       .finally(() => {
         if (!cancelled) setLoading(false)
@@ -41,7 +38,7 @@ export default function ProjectsSlider() {
   }, [])
 
   return (
-    <section id="projects" className="bg-paper pb-24 md:pb-32">
+    <section id="projects" className="bg-paper pb-20 md:pb-28 lg:pb-32">
       <div className="site-wrap">
         <div className="reveal flex flex-col gap-6 border-b border-ink/15 pb-10 md:flex-row md:items-end md:justify-between">
           <div>
@@ -64,7 +61,6 @@ export default function ProjectsSlider() {
           <ul className="border-b border-ink/15">
             {featuredProjects.map((project, index) => {
               const preview = projectPreview(project)
-              const location = projectLocation(project)
 
               return (
                 <li
@@ -73,19 +69,23 @@ export default function ProjectsSlider() {
                 >
                   <Link
                     href={`/projects/${project.slug}`}
-                    className="project-row group grid gap-8 px-0 py-10 transition-colors duration-300 hover:bg-ink/[0.04] focus-visible:bg-ink/[0.04] md:grid-cols-12 md:gap-10 md:px-4 md:py-12 lg:gap-14 lg:px-6"
-                    aria-label={`View project: ${project.title}`}
+                    className="project-row group grid gap-6 px-0 py-8 transition-colors duration-300 hover:bg-ink/[0.04] focus-visible:bg-ink/[0.04] md:grid-cols-12 md:items-center md:gap-10 md:px-4 md:py-10 lg:gap-14 lg:px-6"
+                    aria-label={project.title}
                   >
-                    <div className="flex flex-col md:col-span-5 lg:col-span-4">
-                      <h3 className="display text-[clamp(1.6rem,2.6vw,2.35rem)] leading-[1.05] text-ink">
+                    <div className="flex flex-col md:col-span-5">
+                      <h3 className="display text-[clamp(1.6rem,2.6vw,2.35rem)] leading-[1.05] text-ink" dir="auto">
                         {project.title}
                       </h3>
 
-                      <div className="mt-8 grid gap-5 sm:grid-cols-2">
-                        <div>
-                          <p className="text-[0.62rem] font-medium tracking-[0.18em] text-mute">{t.projects.location}</p>
-                          <p className="mt-2 text-[0.78rem] uppercase tracking-[0.08em] text-ink/80">{location}</p>
-                        </div>
+                      <div className="mt-6 grid grid-cols-2 gap-5 md:mt-8">
+                        {project.client && (
+                          <div>
+                            <p className="text-[0.62rem] font-medium tracking-[0.18em] text-mute">{t.projects.client}</p>
+                            <p className="mt-2 text-[0.78rem] uppercase tracking-[0.08em] text-ink/80" dir="auto">
+                              {project.client}
+                            </p>
+                          </div>
+                        )}
                         <div>
                           <p className="text-[0.62rem] font-medium tracking-[0.18em] text-mute">{t.projects.yearFinish}</p>
                           <p className="mt-2 text-[0.78rem] uppercase tracking-[0.08em] text-ink/80">
@@ -94,7 +94,7 @@ export default function ProjectsSlider() {
                         </div>
                       </div>
 
-                      <span className="mt-auto inline-flex items-center gap-2 pt-10 text-[0.72rem] font-medium uppercase tracking-[0.16em] text-ink">
+                      <span className="inline-flex items-center gap-2 pt-8 md:pt-10 text-[0.72rem] font-medium uppercase tracking-[0.16em] text-ink">
                         <span className="border-b border-ink/40 pb-0.5 transition group-hover:border-ink">
                           {t.projects.learnMore}
                         </span>
@@ -102,8 +102,8 @@ export default function ProjectsSlider() {
                       </span>
                     </div>
 
-                    <div className="md:col-span-7 lg:col-span-8">
-                      <div className="relative aspect-[16/10] overflow-hidden bg-ink/5">
+                    <div className="order-first md:order-last md:col-span-7">
+                      <div className="relative aspect-[16/10] md:aspect-[16/9] overflow-hidden bg-ink/5">
                         <Image
                           src={preview}
                           alt=""

@@ -38,11 +38,13 @@ function formatNewsDate(item: NewsItem) {
   return ""
 }
 
+const ACRONYMS = new Set(["csr", "ceo", "ai", "ksa", "esg"])
+
 function titleCase(value: string) {
   return value
     .toLowerCase()
     .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((word) => (ACRONYMS.has(word) ? word.toUpperCase() : word.charAt(0).toUpperCase() + word.slice(1)))
     .join(" ")
 }
 
@@ -97,7 +99,7 @@ export default function NewsSection() {
   }, [filter, newsItems, allLabel])
 
   return (
-    <section id="news" className="bg-paper py-24 md:py-32">
+    <section id="news" className="bg-paper py-20 md:py-28 lg:py-32">
       <div className="site-wrap">
         <div className="reveal border-b border-ink/15 pb-8 md:pb-10">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
@@ -111,7 +113,9 @@ export default function NewsSection() {
           </div>
 
           {filters.length > 1 && (
-            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3" role="tablist" aria-label="News categories">
+            <div
+              className="no-scrollbar -mx-4 mt-8 flex gap-x-6 overflow-x-auto whitespace-nowrap px-4 sm:mx-0 sm:flex-wrap sm:gap-y-3 sm:overflow-visible sm:px-0"
+              role="tablist" aria-label="News categories">
               {filters.map((name) => {
                 const active = filter === name
                 return (
@@ -121,7 +125,7 @@ export default function NewsSection() {
                     role="tab"
                     aria-selected={active}
                     onClick={() => setFilter(name)}
-                    className={`pb-1 text-[0.82rem] tracking-[0.02em] transition ${
+                    className={`shrink-0 pb-1 text-[0.82rem] tracking-[0.02em] transition ${
                       active ? "border-b border-ink text-ink" : "text-mute hover:text-ink"
                     }`}
                   >
@@ -152,7 +156,7 @@ export default function NewsSection() {
                   <Link
                     href={`/news/${item.slug}`}
                     className="group flex h-full flex-col px-0 py-8 md:px-6 md:py-10 lg:px-8"
-                    aria-label={`Read full article: ${item.title}`}
+                    aria-label={`${t.pages.news.readArticle} ${item.title}`}
                   >
                     <div className="relative aspect-[16/11] overflow-hidden bg-ink/5">
                       <Image
@@ -165,7 +169,7 @@ export default function NewsSection() {
                       />
                     </div>
 
-                    <h3 className="display mt-6 text-[clamp(1.25rem,1.8vw,1.55rem)] leading-[1.2] text-ink transition group-hover:opacity-70">
+                    <h3 className="display mt-6 text-[clamp(1.25rem,1.8vw,1.55rem)] leading-[1.2] text-ink transition group-hover:opacity-70" dir="auto">
                       {item.title}
                     </h3>
 

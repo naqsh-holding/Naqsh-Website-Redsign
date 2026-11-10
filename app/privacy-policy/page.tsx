@@ -28,8 +28,6 @@ export const metadata: Metadata = {
     card: "summary",
     title: "Privacy Policy | Naqsh Holding Company",
     description: "Learn about how Naqsh Holding Company collects, uses, and protects your personal information.",
-    creator: "@naqsh_holding",
-    site: "@naqsh_holding",
   },
   alternates: {
     canonical: "https://naqsh.com.sa/privacy-policy",

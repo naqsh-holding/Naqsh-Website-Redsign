@@ -69,8 +69,6 @@ export async function generateMetadata({ params }: NewsArticlePageProps): Promis
       title: item.title,
       description: item.excerpt || `Read about ${item.title} - Latest news and updates from Naqsh Holding Company.`,
       images: [articleImage],
-      creator: "@naqsh_holding",
-      site: "@naqsh_holding",
     },
     alternates: {
       canonical: articleUrl,
@@ -104,7 +102,7 @@ export default async function NewsArticlePage({ params }: NewsArticlePageProps) 
     author: item.author,
     date: item.date ? `${item.month} ${item.day}, ${item.year}` : "",
     readTime: item.readTime,
-    heroImage: item.image,
+    heroImage: item.imageFull || item.image,
     content: item.content,
   }
 

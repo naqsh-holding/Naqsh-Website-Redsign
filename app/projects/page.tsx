@@ -3,7 +3,7 @@ import ProjectsPageClient from "./ProjectsPageClient"
 
 export const metadata: Metadata = {
   title: "Our Projects Portfolio | Naqsh Holding Company",
-  description: "Explore our diverse portfolio of successful projects across technology, business incubation, marketing, real estate, and aviation sectors. Discover how Naqsh Holding Company delivers innovative solutions and creates lasting impact across multiple industries.",
+  description: "Explore projects from Naqsh companies across technology, media, real estate, business services, and aviation. Discover how Naqsh Holding Company delivers innovative solutions and creates lasting impact across multiple industries.",
   keywords: [
     "Naqsh Holding projects",
     "Saudi Arabia business projects",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "Our Projects Portfolio | Naqsh Holding Company",
-    description: "Explore our diverse portfolio of successful projects across technology, business incubation, marketing, real estate, and aviation sectors. Discover innovative solutions and lasting impact.",
+    description: "Explore projects from Naqsh companies across technology, media, real estate, business services, and aviation. Discover innovative solutions and lasting impact.",
     url: "https://naqsh.com.sa/projects",
     siteName: "Naqsh Holding Company",
     images: [
@@ -41,10 +41,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Our Projects Portfolio | Naqsh Holding Company",
-    description: "Explore our diverse portfolio of successful projects across technology, business incubation, marketing, real estate, and aviation sectors.",
+    description: "Explore projects from Naqsh companies across technology, media, real estate, business services, and aviation.",
     images: ["/images/projects-og.png"],
-    creator: "@naqsh_holding",
-    site: "@naqsh_holding",
   },
   alternates: {
     canonical: "https://naqsh.com.sa/projects",

@@ -48,19 +48,19 @@ function Row({ row, reverse }: { row: number; reverse?: boolean }) {
   const loop = [...items, ...items]
 
   return (
-    <div className="overflow-hidden">
+    <div className="brand-row overflow-hidden">
       <div
-        className="marquee-track flex w-max gap-20 md:gap-28 lg:gap-32"
+        className="marquee-track flex w-max items-center gap-10 md:gap-14 lg:gap-16"
         style={{ animationDuration: `${36 + row * 8}s`, animationDirection: reverse ? "reverse" : "normal" }}
       >
         {loop.map((brand, index) => (
-          <div key={`${brand.id}-${index}`} className="relative h-24 w-64 flex-shrink-0 md:h-32 md:w-80 lg:h-40 lg:w-[26rem]">
+          <div key={`${brand.id}-${index}`} className="relative h-14 w-36 flex-shrink-0 md:h-16 md:w-44 lg:h-20 lg:w-52">
             <Image
               src={brand.logo}
               alt={brand.name}
               fill
               className="object-contain opacity-90 grayscale contrast-125"
-              sizes="(max-width: 768px) 256px, (max-width: 1024px) 320px, 416px"
+              sizes="(max-width: 768px) 144px, (max-width: 1024px) 176px, 208px"
               unoptimized
             />
           </div>
@@ -74,13 +74,13 @@ export default function OurBrands() {
   const { t } = useLocale()
 
   return (
-    <section id="brands" className="bg-mist py-24 md:py-32">
+    <section id="brands" className="bg-mist py-20 md:py-28 lg:py-32">
       <div className="reveal site-wrap mb-14 md:mb-20">
         <p className="label">{t.brands.label}</p>
         <h2 className="display mt-4 text-[clamp(2rem,4vw,3.4rem)] text-ink">{t.brands.title}</h2>
         <p className="mt-4 max-w-xl text-mute">{t.brands.lede}</p>
       </div>
-      <div className="reveal reveal-d2 space-y-16 md:space-y-20">
+      <div className="reveal reveal-d2 space-y-10 md:space-y-12">
         <Row row={1} />
         <Row row={2} reverse />
         <Row row={3} />
