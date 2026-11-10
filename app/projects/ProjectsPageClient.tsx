@@ -6,10 +6,12 @@ import Link from "next/link"
 import Navigation from "../components/layout/Navigation"
 import Footer from "../components/sections/Footer"
 import { getAllProjects, type Project } from "../lib/data/projects"
+import { useLocale } from "../lib/i18n/LocaleProvider"
 
 export default function ProjectsPageClient() {
   const [allProjects, setAllProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
+  const { t } = useLocale()
 
   useEffect(() => {
     let cancelled = false
@@ -31,16 +33,15 @@ export default function ProjectsPageClient() {
 
       <section className="pt-32 pb-24 md:pt-40">
         <div className="site-wrap">
-          <p className="label">All projects</p>
+          <p className="label">{t.pages.projects.label}</p>
           <h1 className="display mt-5 max-w-4xl text-[clamp(2.2rem,4.6vw,4.2rem)] text-ink">
-            Explore our diverse portfolio of successful projects across technology, business incubation, marketing, real
-            estate, and aviation sectors.
+            {t.pages.projects.title}
           </h1>
 
           {loading ? (
-            <p className="mt-16 text-mute">Loading projects…</p>
+            <p className="mt-16 text-mute">{t.projects.loading}</p>
           ) : allProjects.length === 0 ? (
-            <p className="mt-16 text-mute">Projects will appear here shortly.</p>
+            <p className="mt-16 text-mute">{t.projects.empty}</p>
           ) : (
             <ul className="mt-16 grid gap-x-8 gap-y-14 sm:grid-cols-2">
               {allProjects.map((project) => (
@@ -56,8 +57,8 @@ export default function ProjectsPageClient() {
                         unoptimized
                       />
                     </div>
-                    <p className="label mt-5">{project.category}</p>
-                    <h2 className="display mt-2 text-2xl text-ink md:text-3xl">{project.title}</h2>
+                    <p className="label mt-5" dir="auto">{project.category}</p>
+                    <h2 className="display mt-2 text-2xl text-ink md:text-3xl" dir="auto">{project.title}</h2>
                   </Link>
                 </li>
               ))}

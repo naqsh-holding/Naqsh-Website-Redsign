@@ -171,6 +171,7 @@
     background-color: var(--on-ink) !important;
   }
 
+  html[data-theme="dark"] #ceo-message .text-ink\/75,
   html[data-theme="dark"] #about .text-mute,
   html[data-theme="dark"] #about .text-ink\/85,
   html[data-theme="dark"] #about .text-ink\/80,
@@ -192,6 +193,7 @@
   }
 
   html[data-theme="dark"] #news .border-ink\/15,
+  html[data-theme="dark"] #ceo-message .border-ink\/15,
   html[data-theme="dark"] #projects .border-ink\/15 {
     border-color: rgba(255, 255, 255, 0.14) !important;
   }
@@ -236,11 +238,8 @@
   }
 
   html[data-theme="dark"] #services .theme-mark {
-    border-color: rgba(255, 255, 255, 0.5) !important;
-  }
-
-  html[data-theme="dark"] #services .theme-mark.is-active {
-    background-color: var(--on-ink) !important;
+    border-color: rgba(255, 255, 255, 0.35) !important;
+    color: var(--on-ink) !important;
   }
 
   ::selection {
@@ -373,14 +372,13 @@
   .nav-pill {
     display: inline-flex;
     align-items: center;
-    min-height: 50px;
+    height: 54px;
     border-radius: 999px;
     background: rgba(10, 10, 10, 0.42);
     border: 1px solid rgba(255, 255, 255, 0.16);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     color: #fff;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.22);
     transition: background 0.45s ease, border-color 0.45s ease;
   }
 
@@ -395,7 +393,7 @@
     flex: none;
     width: 44px;
     height: 44px;
-    margin: 3px;
+    margin: 4px;
     overflow: hidden;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.1);
@@ -403,8 +401,8 @@
 
   .nav-link {
     position: relative;
-    padding: 0.9rem 0.78rem;
-    font-size: 0.68rem;
+    padding: 0 0.95rem;
+    font-size: 0.76rem;
     font-weight: 500;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -419,8 +417,9 @@
 
   .nav-contact,
   .nav-lang {
-    padding: 0 1.45rem;
-    font-size: 0.68rem;
+    justify-content: center;
+    padding: 0 1.6rem;
+    font-size: 0.76rem;
     font-weight: 500;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -461,13 +460,11 @@
   }
 
   html[lang="ar"] .hero-copy h1 {
-    max-width: 8ch;
-    line-height: 1.2;
+    line-height: 1.3;
     font-weight: 700;
   }
 
   html[lang="ar"] .hero-lede {
-    max-width: 28ch;
     letter-spacing: 0;
   }
 
@@ -476,10 +473,58 @@
   }
 
   .nav-menu {
-    width: 50px;
-    height: 50px;
+    width: 54px;
+    height: 54px;
     justify-content: center;
     padding: 0;
+  }
+
+  /* Tablets: keep the bigger pills but tighten the links so the bar fits */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .nav-link {
+      padding: 0 0.6rem;
+      font-size: 0.68rem;
+    }
+
+    .nav-contact,
+    .nav-lang {
+      padding: 0 1.1rem;
+      font-size: 0.68rem;
+    }
+  }
+
+  /* Lighter, smaller nav controls on phones so they don't sit on headings */
+  @media (max-width: 767px) {
+    .nav-pill {
+      height: 40px;
+    }
+
+    .nav-logo {
+      width: 32px;
+      height: 32px;
+    }
+
+    .nav-logo img {
+      width: 20px !important;
+      height: 20px !important;
+    }
+
+    .nav-menu {
+      width: 40px;
+      height: 40px;
+    }
+
+    .nav-lang {
+      padding: 0 1rem;
+    }
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 
   .company-logo {
@@ -492,20 +537,36 @@
     filter: brightness(0) invert(1);
   }
 
-  @media (min-width: 640px) {
-    .company-grid > .company-cell:nth-child(odd) {
-      border-right: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+  /* Companies: 2-up on small screens (last one spans the row), 5-up from lg */
+  .company-grid > .company-cell {
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+  }
+
+  .company-grid > .company-cell:nth-child(odd):not(:last-child) {
+    border-inline-end: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+  }
+
+  .company-grid > .company-cell:last-child {
+    grid-column: 1 / -1;
+    border-bottom: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .company-grid > .company-cell,
+    .company-grid > .company-cell:last-child {
+      grid-column: auto;
+      border-bottom: 0;
+    }
+
+    .company-grid > .company-cell:not(:last-child) {
+      border-inline-end: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
     }
   }
 
-  @media (min-width: 1280px) {
-    .company-grid > .company-cell:nth-child(odd) {
-      border-right: 0;
-    }
-
-    .company-grid > .company-cell:not(:nth-child(3n)) {
-      border-right: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
-    }
+  /* Fade the partner marquee into the edges instead of cutting logos off */
+  .brand-row {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
   }
 
   .surface-ink {
@@ -551,9 +612,15 @@ html[data-hero-pending] header {
 
 .hero-veil {
   opacity: 0;
-  background:
-    linear-gradient(90deg, rgba(8, 8, 8, 0.62) 0%, rgba(8, 8, 8, 0.34) 42%, rgba(8, 8, 8, 0.16) 100%),
-    linear-gradient(180deg, rgba(8, 8, 8, 0.28) 0%, transparent 32%, rgba(8, 8, 8, 0.42) 100%);
+  /* Only darken the edges that carry UI (nav on top, copy at the bottom);
+     the middle of the frame stays as filmed. */
+  background: linear-gradient(
+    180deg,
+    rgba(8, 8, 8, 0.22) 0%,
+    transparent 18%,
+    transparent 62%,
+    rgba(8, 8, 8, 0.55) 100%
+  );
   transition: opacity 2.1s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -562,8 +629,13 @@ html:not([data-hero-pending]) .hero-veil {
 }
 
 .hero-lede {
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba(255, 255, 255, 0.78);
   text-shadow: 0 1px 16px rgba(0, 0, 0, 0.35);
+}
+
+.hero-rule {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.28);
 }
 
 .hero-copy {

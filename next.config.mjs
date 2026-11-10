@@ -5,17 +5,10 @@ const nextConfig = {
   output: "export",
   trailingSlash: true,
   basePath: basePath || undefined,
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   images: {
     unoptimized: true,
   },
   experimental: {
-    optimizePackageImports: ['@radix-ui/react-icons', 'lucide-react'],
     workerThreads: false,
     cpus: 1,
   },

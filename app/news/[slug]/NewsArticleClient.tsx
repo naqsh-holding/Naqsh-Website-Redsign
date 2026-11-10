@@ -5,6 +5,7 @@ import Link from "next/link"
 import { useEffect } from "react"
 import Navigation from "@/app/components/layout/Navigation"
 import Footer from "@/app/components/sections/Footer"
+import { useLocale } from "@/app/lib/i18n/LocaleProvider"
 
 interface NewsArticleClientProps {
   article: {
@@ -27,6 +28,8 @@ interface NewsArticleClientProps {
 }
 
 export default function NewsArticleClient({ article, slug }: NewsArticleClientProps) {
+  const { t } = useLocale()
+
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [slug])
@@ -39,11 +42,11 @@ export default function NewsArticleClient({ article, slug }: NewsArticleClientPr
 
       <article className="pt-28 md:pt-32">
         <div className="site-wrap max-w-3xl pb-10">
-          <p className="label">
+          <p className="label" dir="auto">
             {article.category} · {article.readTime}
           </p>
-          <h1 className="display mt-5 text-[clamp(2.1rem,4.4vw,4rem)] text-ink">{article.title}</h1>
-          {article.subtitle && <p className="mt-6 text-lg leading-relaxed text-mute">{article.subtitle}</p>}
+          <h1 className="display mt-5 text-[clamp(2.1rem,4.4vw,4rem)] text-ink" dir="auto">{article.title}</h1>
+          {article.subtitle && <p className="mt-6 text-lg leading-relaxed text-mute" dir="auto">{article.subtitle}</p>}
           <div className="mt-8 flex flex-wrap items-center gap-6 text-sm text-mute">
             <span>{article.date}</span>
             <span>{article.author}</span>
@@ -53,7 +56,7 @@ export default function NewsArticleClient({ article, slug }: NewsArticleClientPr
               rel="noopener noreferrer"
               className="hover:text-ink"
             >
-              Share on LinkedIn
+              {t.pages.news.share}
             </a>
           </div>
         </div>
@@ -62,7 +65,7 @@ export default function NewsArticleClient({ article, slug }: NewsArticleClientPr
           <Image src={article.heroImage || "/placeholder.svg"} alt={article.title} fill className="object-cover" priority unoptimized />
         </div>
 
-        <div className="site-wrap max-w-3xl py-16 md:py-24">
+        <div className="site-wrap max-w-3xl py-16 md:py-24" dir="auto">
           {article.content.map((block, index) => (
             <div key={index} className="mb-10">
               {block.type === "heading" && <h2 className="display mb-4 text-3xl text-ink">{block.text}</h2>}
@@ -83,7 +86,7 @@ export default function NewsArticleClient({ article, slug }: NewsArticleClientPr
           ))}
 
           <Link href="/news" className="arrow-link mt-8 text-ink">
-            <span className="arrow-line">Back to news</span>
+            <span className="arrow-line">{t.pages.news.back}</span>
             <span className="arrow" aria-hidden="true">
               →
             </span>

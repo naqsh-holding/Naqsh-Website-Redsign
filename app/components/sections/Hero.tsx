@@ -28,8 +28,9 @@ export default function Hero() {
     const REVEAL_LEAD = 1.85
 
     document.documentElement.setAttribute("data-hero-pending", "1")
-    video.defaultMuted = false
-    video.muted = false
+    // Always start muted; sound is opt-in via the "Enable sound" button only.
+    video.defaultMuted = true
+    video.muted = true
     video.volume = 1
     video.playbackRate = 1
     video.playsInline = true
@@ -100,15 +101,6 @@ export default function Hero() {
       setHasSound(!video.muted)
     }
 
-    const playWithSound = async () => {
-      video.muted = false
-      video.defaultMuted = false
-      video.volume = 1
-      await video.play()
-      markSound()
-      startClock()
-    }
-
     const playVideo = async () => {
       if (cancelled || stopped) return
       if (playbackStarted && !video.paused) {
@@ -124,16 +116,11 @@ export default function Hero() {
       }
 
       try {
-        await playWithSound()
+        await video.play()
+        markSound()
+        startClock()
       } catch {
-        video.muted = true
-        try {
-          await video.play()
-          startClock()
-          setHasSound(false)
-        } catch {
-          reveal()
-        }
+        reveal()
       }
     }
 
@@ -175,8 +162,6 @@ export default function Hero() {
     video.addEventListener("ended", freezeLastFrame)
     video.addEventListener("error", reveal)
     video.addEventListener("playing", markSound)
-    window.addEventListener("pointerdown", unlockSound)
-    window.addEventListener("keydown", unlockSound)
     window.addEventListener("naqsh-unlock-audio", unlockSound)
     startAfterIntro()
 
@@ -189,8 +174,6 @@ export default function Hero() {
       video.removeEventListener("ended", freezeLastFrame)
       video.removeEventListener("error", reveal)
       video.removeEventListener("playing", markSound)
-      window.removeEventListener("pointerdown", unlockSound)
-      window.removeEventListener("keydown", unlockSound)
       window.removeEventListener("naqsh-unlock-audio", unlockSound)
       window.clearInterval(clock)
       window.cancelAnimationFrame(settle)
@@ -217,6 +200,7 @@ export default function Hero() {
           ref={videoRef}
           className="h-full w-full object-cover object-center"
           playsInline
+          muted
           preload="auto"
           aria-hidden="true"
         >
@@ -225,26 +209,23 @@ export default function Hero() {
       </div>
       <div className="hero-veil absolute inset-0 z-10" />
 
+      {/* The film is the hero: copy sits in a slim bar along the bottom edge so
+          the engraved logo at the centre of the frame stays untouched. */}
       <div
-        className="hero-copy absolute inset-0 z-20 flex flex-col justify-center pb-[16vh] pt-[18vh]"
+        className="hero-copy absolute inset-x-0 bottom-0 z-20 px-5 pb-[max(1.75rem,env(safe-area-inset-bottom))] sm:px-8 md:pb-10 lg:px-12 xl:px-16"
         aria-hidden={!ready}
       >
-        <div className="px-5 sm:px-8 lg:px-12 xl:px-16">
+        <div className="hero-in hero-rule" />
+        <div className="flex flex-col gap-4 pt-5 md:flex-row md:items-end md:justify-between md:gap-12 md:pt-6">
           <h1
-            className={`hero-in display text-[clamp(2.85rem,7.6vw,6.4rem)] text-white ${
-              locale === "ar" ? "max-w-[9ch] leading-[1.2]" : "max-w-[11ch]"
-            }`}
+            className="hero-in display whitespace-nowrap text-[clamp(1.75rem,3.2vw,2.9rem)] leading-none text-white"
             lang={locale}
             dir={locale === "ar" ? "rtl" : "ltr"}
           >
-            {t.hero.titleLine1}
-            <br />
-            {t.hero.titleLine2}
+            {t.hero.titleLine1} {t.hero.titleLine2}
           </h1>
           <p
-            className={`hero-in hero-lede mt-8 text-[0.9rem] font-light leading-[1.7] md:mt-12 md:text-[0.98rem] ${
-              locale === "ar" ? "max-w-[32ch]" : "max-w-[28ch]"
-            }`}
+            className="hero-in hero-lede max-w-[38ch] text-[0.85rem] font-light leading-[1.65] md:text-end md:text-[0.9rem]"
             lang={locale}
             dir={locale === "ar" ? "rtl" : "ltr"}
           >
@@ -253,7 +234,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {!hasSound && !finished && (
+      {!hasSound && !finished && !ready && (
         <button type="button" className="hero-sound" onClick={enableSound}>
           {t.hero.enableSound}
         </button>

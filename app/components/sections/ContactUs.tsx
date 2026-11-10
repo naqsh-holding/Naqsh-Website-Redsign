@@ -58,8 +58,8 @@ export default function ContactUs() {
             </div>
             <div>
               <h3 className="label">{t.contact.call}</h3>
-              <a href="tel:0535558889" className="mt-3 block text-ink hover:opacity-70">
-                0535558889
+              <a href="tel:+966535558889" className="mt-3 block text-ink hover:opacity-70">
+                <span dir="ltr">+966 53 555 8889</span>
               </a>
             </div>
             <div>
@@ -72,31 +72,31 @@ export default function ContactUs() {
         </div>
 
         <form onSubmit={handleSubmit} className="reveal reveal-d2 space-y-8 lg:col-span-7">
-          <Field id="name" label="Name / الاسم" value={formData.name} onChange={handleInputChange} />
+          <Field id="name" label={t.form.name} value={formData.name} onChange={handleInputChange} />
           <Field
             id="email"
             type="email"
-            label="Email Address / البريد الإلكتروني"
+            label={t.form.email}
             value={formData.email}
             onChange={handleInputChange}
             required
           />
           <Field
             id="organization"
-            label="Organization Name / اسم الجهة"
+            label={t.form.organization}
             value={formData.organization}
             onChange={handleInputChange}
           />
           <Field
             id="phone"
             type="tel"
-            label="Phone Number / رقم الهاتف"
+            label={t.form.phone}
             value={formData.phone}
             onChange={handleInputChange}
           />
           <div>
             <label htmlFor="message" className="label">
-              Message
+              {t.form.message}
             </label>
             <textarea
               id="message"
@@ -112,24 +112,23 @@ export default function ContactUs() {
             disabled={isSubmitting}
             className="arrow-link bg-ink px-8 text-[var(--on-ink)] disabled:opacity-50"
           >
-            <span className="arrow-line">{isSubmitting ? "Submitting..." : "Submit"}</span>
+            <span className="arrow-line">{isSubmitting ? t.form.submitting : t.form.submit}</span>
             <span className="arrow" aria-hidden="true">
               →
             </span>
           </button>
           {status === "success" && (
             <p className="text-sm text-ink" role="status">
-              Thank you for your message. We&apos;ll get back to you soon.
+              {t.form.success}
             </p>
           )}
           {status === "error" && (
             <p className="text-sm text-red-800" role="alert">
-              Something went wrong. Please try again or email contact@naqsh.com.sa.
+              {t.form.error}
             </p>
           )}
           <p className="text-xs text-mute">
-            Never share sensitive information (credit card numbers, social security numbers, passwords) through this
-            form.
+            {t.form.warning}
           </p>
         </form>
       </div>

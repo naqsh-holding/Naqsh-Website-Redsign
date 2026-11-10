@@ -28,7 +28,7 @@ export default function Footer() {
         <div className="grid gap-12 border-t border-white/15 pt-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-8 lg:pt-16">
           <div className="lg:col-span-5">
             <Link href="/" className="inline-block" aria-label="Naqsh Home">
-              <img src={withBase("/naqsh-white.png")} alt="Naqsh Logo" width={135} height={45} className="h-9 w-auto" />
+              <img src={withBase("/naqsh-white.png")} alt="Naqsh Logo" width={135} height={45} className="h-12 w-auto md:h-14" />
             </Link>
             <p className="mt-6 max-w-sm text-sm leading-relaxed text-white/60">{t.footer.blurb}</p>
           </div>
@@ -78,8 +78,8 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="tel:0535558889" className="text-sm text-white/70 transition hover:text-white">
-                  0535558889
+                <a href="tel:+966535558889" className="text-sm text-white/70 transition hover:text-white" dir="ltr">
+                  +966 53 555 8889
                 </a>
               </li>
             </ul>

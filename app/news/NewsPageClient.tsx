@@ -6,10 +6,12 @@ import Link from "next/link"
 import { getAllNews, type NewsItem } from "../lib/data/news"
 import Navigation from "../components/layout/Navigation"
 import Footer from "../components/sections/Footer"
+import { useLocale } from "../lib/i18n/LocaleProvider"
 
 export default function NewsPageClient() {
   const [allNews, setAllNews] = useState<NewsItem[]>([])
   const [loading, setLoading] = useState(true)
+  const { t } = useLocale()
 
   useEffect(() => {
     let cancelled = false
@@ -31,16 +33,15 @@ export default function NewsPageClient() {
 
       <section className="pt-32 pb-24 md:pt-40">
         <div className="site-wrap">
-          <p className="label">All news</p>
+          <p className="label">{t.pages.news.label}</p>
           <h1 className="display mt-5 max-w-4xl text-[clamp(2.2rem,4.6vw,4.2rem)] text-ink">
-            Stay updated with the latest developments, announcements, and insights from Naqsh Holding and our
-            subsidiaries.
+            {t.pages.news.title}
           </h1>
 
           {loading ? (
-            <p className="mt-16 text-mute">Loading news…</p>
+            <p className="mt-16 text-mute">{t.news.loading}</p>
           ) : allNews.length === 0 ? (
-            <p className="mt-16 text-mute">News will appear here shortly.</p>
+            <p className="mt-16 text-mute">{t.news.empty}</p>
           ) : (
             <ul className="mt-16 divide-y divide-ink/15 border-y border-ink/15">
               {allNews.map((item) => (
@@ -48,7 +49,7 @@ export default function NewsPageClient() {
                   <Link
                     href={`/news/${item.slug}`}
                     className="group grid items-center gap-6 py-8 md:grid-cols-12 md:gap-10 md:py-10"
-                    aria-label={`Read full article: ${item.title}`}
+                    aria-label={`${t.pages.news.readArticle} ${item.title}`}
                   >
                     <div className="relative aspect-[16/11] overflow-hidden md:col-span-4">
                       <Image
@@ -61,12 +62,12 @@ export default function NewsPageClient() {
                       />
                     </div>
                     <div className="md:col-span-8">
-                      <p className="label">
+                      <p className="label" dir="auto">
                         {item.day} {item.month} {item.year}
                         {item.categories[0] ? ` · ${item.categories[0].name}` : ""}
                       </p>
-                      <h2 className="display mt-3 text-[clamp(1.4rem,2.4vw,2.2rem)] text-ink">{item.title}</h2>
-                      {item.excerpt && <p className="mt-3 max-w-2xl text-mute">{item.excerpt}</p>}
+                      <h2 className="display mt-3 text-[clamp(1.4rem,2.4vw,2.2rem)] text-ink" dir="auto">{item.title}</h2>
+                      {item.excerpt && <p className="mt-3 max-w-2xl text-mute" dir="auto">{item.excerpt}</p>}
                     </div>
                   </Link>
                 </li>

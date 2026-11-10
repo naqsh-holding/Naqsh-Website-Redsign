@@ -8,12 +8,12 @@ function canHover() {
 }
 
 export default function OurServices() {
-  const [activeId, setActiveId] = useState<number | null>(null)
+  const [activeId, setActiveId] = useState<number | null>(1)
   const { t } = useLocale()
   const services = t.services.items.map((item, index) => ({ id: index + 1, ...item }))
 
   return (
-    <section id="services" className="bg-paper py-24 md:py-32 lg:py-40">
+    <section id="services" className="bg-paper py-20 md:py-28 lg:py-32">
       <div className="site-wrap grid gap-16 lg:grid-cols-12">
         <div className="reveal lg:col-span-5">
           <p className="label">{t.services.label}</p>
@@ -24,9 +24,6 @@ export default function OurServices() {
         <div className="reveal reveal-d2 lg:col-span-7">
           <div
             className="theme-rule divide-y border-y border-ink/15 divide-ink/15"
-            onMouseLeave={() => {
-              if (canHover()) setActiveId(null)
-            }}
           >
             {services.map((service, index) => {
               const isActive = activeId === service.id
@@ -61,11 +58,14 @@ export default function OurServices() {
                     </span>
                   </span>
                   <span
-                    className={`theme-mark mt-2 inline-block h-3 w-3 border border-ink/40 transition duration-300 ${
-                      isActive ? "is-active bg-ink" : ""
+                    className={`theme-mark relative mt-1.5 text-ink grid h-7 w-7 place-items-center rounded-full border border-ink/25 transition duration-300 group-hover:border-ink/60 ${
+                      isActive ? "is-active rotate-45" : ""
                     }`}
                     aria-hidden="true"
-                  />
+                  >
+                    <span className="absolute h-px w-3 bg-current" />
+                    <span className="absolute h-3 w-px bg-current" />
+                  </span>
                 </button>
               )
             })}

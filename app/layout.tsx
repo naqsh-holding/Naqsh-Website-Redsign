@@ -9,9 +9,9 @@ import LoadingScreen from "./components/sections/LoadingScreen"
 import Providers from "./components/Providers"
 
 export const metadata: Metadata = {
-  title: "Naqsh Holding Company | Investment Leader | To Leave a Trace",
+  title: "Naqsh Holding Company | To Leave a Trace",
   description:
-    "Naqsh Holding Company is a leading investment firm in Saudi Arabia with 5 diverse subsidiaries: 6 Degrees Technologies, Efficiency Center Business Inc., Promotion Efficiency for Advertising, Burooj, and Burooj Air. Discover our innovative projects and strategic investments across technology, business incubation, marketing, real estate, and aviation sectors.",
+    "Naqsh Holding Company is a Saudi investment group with five companies: 6 Degrees Technologies, Efficiency Center Business Inc., Promotion Efficiency for Advertising, Burooj, and Burooj Air. Discover our innovative projects and strategic investments across technology, media, real estate, business services, and aviation.",
   generator: "Next.js",
   applicationName: "Naqsh Holding Company",
   keywords: [
@@ -39,9 +39,9 @@ export const metadata: Metadata = {
   publisher: "Naqsh Holding Company",
   metadataBase: new URL("https://naqsh.com.sa"),
   openGraph: {
-    title: "Naqsh Holding Company | Investment Leader | To Leave a Trace",
+    title: "Naqsh Holding Company | To Leave a Trace",
     description:
-      "Naqsh Holding Company is a leading investment firm in Saudi Arabia with 5 diverse subsidiaries across technology, business incubation, marketing, real estate, and aviation sectors. Discover our innovative projects and strategic investments.",
+      "Naqsh Holding Company is a Saudi investment group with five companies across technology, media, real estate, business services, and aviation. Discover our innovative projects and strategic investments.",
     url: "https://naqsh.com.sa",
     siteName: "Naqsh Holding Company",
     images: [
@@ -58,12 +58,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Naqsh Holding Company | Investment Leader | To Leave a Trace",
+    title: "Naqsh Holding Company | To Leave a Trace",
     description:
-      "Naqsh Holding Company is a leading investment firm in Saudi Arabia with 5 diverse subsidiaries across technology, business incubation, marketing, real estate, and aviation sectors.",
+      "Naqsh Holding Company is a Saudi investment group with five companies across technology, media, real estate, business services, and aviation.",
     images: ["/naqsh-og.png"],
-    creator: "@naqsh_holding",
-    site: "@naqsh_holding",
   },
   robots: {
     index: true,
@@ -88,10 +86,6 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://naqsh.com.sa",
-    languages: {
-      "en-US": "/en-US",
-      "ar-SA": "/ar-SA",
-    },
   },
   category: "Business",
   classification: "Investment Company",
@@ -105,7 +99,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${syne.variable} ${outfit.variable} ${notoArabic.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${syne.variable} ${outfit.variable} ${notoArabic.variable}`}>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -126,17 +120,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <style dangerouslySetInnerHTML={{ __html: criticalCSS }} />
         <script
-          dangerouslySetInnerHTML={{
-            __html: `
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-          ${BASE_PATH ? "" : "navigator.serviceWorker.register('/sw.js').catch(function() {});"}
-        });
-      }
-    `,
-          }}
-        />
-        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
@@ -146,7 +129,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               url: "https://naqsh.com.sa",
               logo: "https://naqsh.com.sa/naqsh-white.png",
               description:
-                "Naqsh Holding Company is an investment leader with 5 diverse subsidiaries across technology, business incubation, marketing, real estate, and aviation sectors.",
+                "Naqsh Holding Company is a Saudi investment group with five companies across technology, media, real estate, business services, and aviation.",
               foundingDate: "2020",
               slogan: "To Leave a Trace",
               numberOfEmployees: "500+",
@@ -161,10 +144,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 "@type": "ContactPoint",
                 contactType: "customer service",
                 email: "contact@naqsh.com.sa",
-                telephone: "0535558889",
+                telephone: "+966535558889",
                 availableLanguage: ["English", "Arabic"],
               },
-              sameAs: ["https://linkedin.com/company/naqsh-holding-company", "https://instagram.com/naqsh_holding"],
+              sameAs: ["https://www.linkedin.com/company/naqshco/"],
               hasOfferCatalog: {
                 "@type": "OfferCatalog",
                 name: "Investment Services",

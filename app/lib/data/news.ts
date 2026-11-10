@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any -- Strapi responses are untyped JSON */
 // lib/data/news.ts (Strapi-backed version)
 //
 // The data comes from Strapi (site slug "naqsh", component naqsh.naqsh-news)
@@ -20,6 +21,7 @@ export interface NewsItem {
 	slug: string
 	excerpt: string
 	image: string
+	imageFull: string
 	day: string
 	month: string
 	year: string
@@ -63,7 +65,9 @@ export async function getAllNews(): Promise<NewsItem[]> {
 				}
 			}
 
-			return rawItems.map(normalizeNews)
+			// Newest first; undated items go last
+			const time = (raw: any) => (raw.date ? new Date(raw.date).getTime() : 0)
+			return rawItems.sort((a, b) => time(b) - time(a)).map(normalizeNews)
 		})()
 	}
 	return newsPromise
@@ -90,7 +94,8 @@ function normalizeNews(raw: any): NewsItem {
 		title: raw.title_en || '',
 		slug: raw.slug || '',
 		excerpt: raw.excerpt_en || '',
-		image: raw.cover_image ? resolveMediaUrl(raw.cover_image.url) : '',
+		image: resolveMediaFormat(raw.cover_image),
+		imageFull: raw.cover_image ? resolveMediaUrl(raw.cover_image.url) : '',
 		day: dateObj ? String(dateObj.getDate()).padStart(2, '0') : '',
 		month: dateObj ? MONTHS[dateObj.getMonth()] : '',
 		year: dateObj ? String(dateObj.getFullYear()) : '',
@@ -106,6 +111,14 @@ function estimateReadTime(text: string): string {
 	const words = text.trim().split(/\s+/).filter(Boolean).length
 	const minutes = Math.max(1, Math.round(words / 200))
 	return `${minutes} min read`
+}
+
+// Strapi generates resized copies (thumbnail/small/medium/large) of every
+// upload. Cards use the "large" copy so an oversized original (some are 10MB+)
+// is only downloaded on the detail page.
+function resolveMediaFormat(media: any, format = 'large') {
+	if (!media) return ''
+	return resolveMediaUrl(media.formats?.[format]?.url || media.url)
 }
 
 function resolveMediaUrl(url: string) {
